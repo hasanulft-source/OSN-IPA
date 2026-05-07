@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>OSN IPA — Latihan Harian</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --c0: #09637E;
+  --c1: #088395;
+  --c2: #7AB2B2;
+  --c3: #EBF4F6;
+  --c4: #054f65;
+  --ink: #0D1F26;
+  --ink2: #3A5560;
+  --ink3: #7A9DA8;
+  --surface: #FFFFFF;
+  --border: #C8DFE5;
+  --danger: #C0392B;
+  --danger-bg: #FDF0EF;
+  --success: #0F7B4E;
+  --success-bg: #E8F5EE;
+  --r: 14px;
+  --r-sm: 8px;
+  --shadow: 0 4px 24px rgba(9,99,126,0.10);
+  --shadow-lg: 0 12px 48px rgba(9,99,126,0.18);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--c3);
+  color: var(--ink);
+  min-height: 100vh;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+.bg-mesh {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse 80% 60% at 10% 10%, rgba(9,99,126,0.13) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 80% at 90% 80%, rgba(8,131,149,0.10) 0%, transparent 60%);
+}
+/* HEADER */
+header {
+  position: sticky; top: 0; z-index: 200;
+  background: rgba(9,99,126,0.97);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  padding: 0 40px; height: 64px;
+  display: flex; align-items: center; justify-content: space-between;
+  box-shadow: 0 2px 20px rgba(9,99,126,0.3);
+}
+.logo-wrap { display: flex; align-items: center; gap: 12px; }
+.logo-icon {
+  width: 36px; height: 36px; border-radius: 10px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.2);
+  display: flex; align-items: center; justify-content: center; font-size: 18px;
+}
+.logo-text { color: #fff; }
+.logo-text strong { font-size: 16px; font-weight: 700; display: block; line-height: 1.1; letter-spacing: -0.2px; }
+.logo-text span { font-size: 11px; opacity: 0.6; font-weight: 300; letter-spacing: 0.5px; }
+.header-right { display: flex; align-items: center; gap: 16px; }
+#user-pill {
+  display: none; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 24px; padding: 6px 14px 6px 8px;
+  color: #fff; font-size: 13px; font-weight: 500;
+}
+.user-avatar {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: var(--c2); color: var(--c4);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+}
+.hdr-copy { font-size: 11px; color: rgba(255,255,255,0.4); font-weight: 300; }
+
+/* SCREENS */
+.page { position: relative; z-index: 1; }
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* LOGIN */
+#screen-login { max-width: 460px; margin: 0 auto; padding: 52px 24px 100px; }
+.login-hero { text-align: center; margin-bottom: 32px; animation: fadeUp 0.6s ease both; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(9,99,126,0.08); border: 1px solid rgba(9,99,126,0.15);
+  border-radius: 20px; padding: 5px 14px;
+  font-size: 12px; font-weight: 600; color: var(--c0);
+  letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 20px;
+}
+.hero-title {
+  font-family: 'Instrument Serif', serif;
+  font-size: 42px; line-height: 1.1; color: var(--ink);
+  margin-bottom: 12px; letter-spacing: -0.5px;
+}
+.hero-title em { color: var(--c1); font-style: italic; }
+.hero-sub { font-size: 14px; color: var(--ink2); font-weight: 300; line-height: 1.7; }
+
+.login-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); box-shadow: var(--shadow-lg);
+  padding: 36px 32px; animation: fadeUp 0.6s 0.1s ease both;
+}
+.login-card h2 { font-size: 17px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.login-card .sub { font-size: 13px; color: var(--ink3); margin-bottom: 28px; }
+
+.field { margin-bottom: 18px; }
+.field label {
+  display: block; font-size: 12px; font-weight: 600; color: var(--ink2);
+  text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 7px;
+}
+.input-wrap { position: relative; }
+.input-wrap .ico { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 16px; pointer-events: none; }
+input[type=text], input[type=password] {
+  width: 100%; padding: 12px 16px 12px 42px;
+  border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  font-family: 'Sora', sans-serif; font-size: 14px; color: var(--ink);
+  background: #FAFCFD; outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+input:focus { border-color: var(--c1); background: #fff; box-shadow: 0 0 0 3px rgba(8,131,149,0.1); }
+input::placeholder { color: var(--ink3); font-weight: 300; }
+.show-pw {
+  position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer; font-size: 16px; color: var(--ink3);
+}
+.err-box {
+  display: none; align-items: center; gap: 8px;
+  background: #FDF0EF; border: 1px solid #F5C6C2;
+  border-radius: var(--r-sm); padding: 10px 14px;
+  font-size: 13px; color: var(--danger); margin-bottom: 16px;
+}
+.err-box.show { display: flex; }
+.btn-login {
+  width: 100%; padding: 14px;
+  background: linear-gradient(135deg, var(--c0), var(--c1));
+  color: #fff; border: none; border-radius: var(--r-sm);
+  font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 600;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(9,99,126,0.3);
+}
+.btn-login:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(9,99,126,0.4); }
+
+/* MAIN */
+main { max-width: 860px; margin: 0 auto; padding: 48px 24px 100px; }
+.top-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, var(--c0), var(--c1));
+  border-radius: var(--r); padding: 20px 28px;
+  margin-bottom: 32px; box-shadow: var(--shadow); color: #fff;
+}
+.top-bar-left .greet { font-size: 12px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 4px; }
+.top-bar-left .uname { font-size: 20px; font-weight: 700; }
+.top-bar-right { text-align: right; }
+.top-bar-right .dlbl { font-size: 11px; opacity: 0.6; text-transform: uppercase; letter-spacing: 0.5px; }
+.top-bar-right .dval { font-family: 'Instrument Serif', serif; font-size: 18px; margin-top: 2px; }
+.soal-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: 20px; padding: 4px 12px; font-size: 12px; font-weight: 600; margin-top: 8px;
+}
+
+/* LOADING / EMPTY */
+#loading { text-align: center; padding: 72px 24px; display: none; }
+.spinner {
+  width: 40px; height: 40px; border: 3px solid var(--border);
+  border-top-color: var(--c1); border-radius: 50%;
+  animation: spin 0.75s linear infinite; margin: 0 auto 16px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+#loading p { font-size: 14px; color: var(--ink3); }
+#empty { display: none; text-align: center; padding: 72px 24px; }
+#empty .ico { font-size: 52px; margin-bottom: 16px; }
+#empty h3 { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+#empty p { font-size: 14px; color: var(--ink3); }
+
+/* BACAAN */
+.bacaan-card {
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); overflow: hidden; margin-bottom: 16px;
+  box-shadow: var(--shadow); animation: fadeUp 0.4s ease both;
+}
+.bacaan-header {
+  display: flex; align-items: center; gap: 12px;
+  background: linear-gradient(135deg, var(--c0), var(--c1)); padding: 14px 22px;
+}
+.bacaan-tag {
+  background: rgba(255,255,255,0.2); border-radius: 20px;
+  padding: 3px 10px; font-size: 11px; font-weight: 700;
+  color: #fff; letter-spacing: 0.5px; text-transform: uppercase; white-space: nowrap;
+}
+.bacaan-title-txt { font-family: 'Instrument Serif', serif; font-size: 17px; color: #fff; }
+.bacaan-body { padding: 22px 24px; }
+.bacaan-teks { font-size: 14px; color: var(--ink2); line-height: 1.85; text-align: justify; }
+
+/* SOAL */
+.soal-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--r); padding: 22px 24px; margin-bottom: 12px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 10px rgba(9,99,126,0.05);
+  animation: fadeUp 0.4s ease both;
+}
+.soal-card.answered { border-color: var(--c2); box-shadow: 0 2px 14px rgba(8,131,149,0.12); }
+.soal-card.benar { border-color: #4CAF82; background: var(--success-bg); }
+.soal-card.salah { border-color: #E57373; background: var(--danger-bg); }
+.soal-meta { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.soal-num-badge {
+  background: var(--c3); color: var(--c0);
+  font-size: 11px; font-weight: 700; border-radius: 6px;
+  padding: 3px 10px; text-transform: uppercase; letter-spacing: 0.4px;
+}
+.tipe-badge {
+  background: rgba(9,99,126,0.08); color: var(--c0);
+  font-size: 11px; font-weight: 600; border-radius: 6px;
+  padding: 3px 8px; border: 1px solid rgba(9,99,126,0.12);
+}
+.soal-teks { font-size: 14.5px; font-weight: 500; color: var(--ink); line-height: 1.65; margin-bottom: 16px; }
+
+/* OPTIONS */
+.opsi-list { display: flex; flex-direction: column; gap: 8px; }
+.opsi-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 16px; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  cursor: pointer; transition: all 0.15s; font-size: 14px; color: var(--ink2);
+  user-select: none;
+}
+.opsi-item:hover { border-color: var(--c2); background: rgba(122,178,178,0.07); color: var(--ink); }
+.opsi-item.selected { border-color: var(--c1); background: rgba(8,131,149,0.06); color: var(--ink); font-weight: 500; }
+.opsi-item.correct-ans { border-color: var(--success) !important; background: var(--success-bg) !important; }
+.opsi-item.wrong-ans { border-color: var(--danger) !important; background: var(--danger-bg) !important; }
+.opsi-item input { display: none; }
+.opsi-key {
+  min-width: 28px; height: 28px; border-radius: 7px;
+  background: var(--c3); color: var(--c0);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700; flex-shrink: 0; transition: all 0.15s;
+}
+.opsi-item.selected .opsi-key { background: var(--c1); color: #fff; }
+.bs-list { display: flex; gap: 10px; }
+.bs-item {
+  flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 13px 16px; border: 1.5px solid var(--border); border-radius: var(--r-sm);
+  cursor: pointer; font-size: 14px; font-weight: 500; transition: all 0.15s; color: var(--ink2);
+  user-select: none;
+}
+.bs-item:hover { border-color: var(--c2); background: rgba(122,178,178,0.07); color: var(--ink); }
+.bs-item.selected { border-color: var(--c1); background: rgba(8,131,149,0.06); color: var(--ink); }
+.bs-item input { display: none; }
+
+/* HASIL */
+.hasil-row { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.hasil-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 700;
+}
+.hasil-chip.benar { background: #D4EDDA; color: #0F7B4E; }
+.hasil-chip.salah { background: #FAD7D4; color: #C0392B; }
+.pen-box {
+  margin-top: 14px; padding: 14px 16px; border-radius: var(--r-sm);
+  font-size: 13.5px; line-height: 1.7; color: var(--ink2);
+}
+.pen-box.benar { background: rgba(79,193,133,0.10); border-left: 3px solid #4CAF82; }
+.pen-box.salah { background: rgba(229,115,115,0.10); border-left: 3px solid #E57373; }
+.pen-lbl {
+  font-size: 11px; font-weight: 700; text-transform: uppercase;
+  letter-spacing: 0.5px; display: block; margin-bottom: 5px;
+}
+.pen-box.benar .pen-lbl { color: var(--success); }
+.pen-box.salah .pen-lbl { color: var(--danger); }
+
+/* SUBMIT */
+.submit-section { margin-top: 8px; }
+.prog-info { display: flex; justify-content: space-between; font-size: 12px; color: var(--ink3); font-weight: 500; margin-bottom: 6px; }
+.prog-track { height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; margin-bottom: 12px; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--c0), var(--c2)); border-radius: 3px; transition: width 0.35s cubic-bezier(.4,0,.2,1); }
+.btn-submit {
+  width: 100%; padding: 16px;
+  background: linear-gradient(135deg, var(--c0), var(--c1));
+  color: #fff; border: none; border-radius: var(--r-sm);
+  font-family: 'Sora', sans-serif; font-size: 15px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(9,99,126,0.35);
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+}
+.btn-submit:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(9,99,126,0.45); }
+.btn-submit:disabled { opacity: 0.4; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* SKOR */
+#skor-panel {
+  display: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r); padding: 48px 32px; text-align: center;
+  box-shadow: var(--shadow-lg); margin-bottom: 32px; animation: fadeUp 0.5s ease both;
+}
+.skor-ring {
+  width: 130px; height: 130px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--c0), var(--c1));
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  margin: 0 auto 24px; box-shadow: 0 8px 32px rgba(9,99,126,0.35);
+}
+.skor-ring .snum { font-family: 'Instrument Serif', serif; font-size: 46px; color: #fff; line-height: 1; }
+.skor-ring .sden { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 2px; }
+.skor-hl { font-family: 'Instrument Serif', serif; font-size: 28px; color: var(--ink); margin-bottom: 6px; }
+.skor-ds { font-size: 14px; color: var(--ink3); }
+.skor-pct {
+  display: inline-block; background: var(--c3); color: var(--c0);
+  font-weight: 700; font-size: 20px; padding: 6px 20px;
+  border-radius: 10px; margin: 16px 0 0;
+}
+
+/* FOOTER */
+footer {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  background: rgba(235,244,246,0.94); backdrop-filter: blur(10px);
+  border-top: 1px solid var(--border);
+  padding: 10px 40px;
+  display: flex; align-items: center; justify-content: flex-end; z-index: 100;
+}
+.copy { font-size: 11.5px; color: var(--ink3); }
+.copy strong { color: var(--c0); font-weight: 600; }
+
+/* TOAST */
+#toast {
+  position: fixed; bottom: 56px; left: 50%; transform: translateX(-50%) translateY(10px);
+  background: var(--ink); color: #fff; padding: 12px 22px; border-radius: 10px;
+  font-size: 13.5px; font-weight: 500; opacity: 0; transition: all 0.3s;
+  pointer-events: none; z-index: 999; white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+
+@media (max-width:600px) {
+  header { padding: 0 20px; }
+  #screen-login { padding: 32px 16px 80px; }
+  main { padding: 32px 16px 80px; }
+  .login-card { padding: 24px 20px; }
+  .hero-title { font-size: 34px; }
+  .top-bar { flex-direction: column; align-items: flex-start; gap: 12px; }
+  footer { padding: 10px 20px; }
+  .hdr-copy { display: none; }
+}
+</style>
+</head>
+<body>
+<div class="bg-mesh"></div>
+<div class="page">
+
+<header>
+  <div class="logo-wrap">
+    <div class="logo-icon">🔬</div>
+    <div class="logo-text">
+      <strong>OSN IPA</strong>
+      <span>LATIHAN HARIAN</span>
+    </div>
+  </div>
+  <div class="header-right">
+    <div id="user-pill">
+      <div class="user-avatar" id="avatar-init"></div>
+      <span id="uname-display"></span>
+    </div>
+    <div class="hdr-copy">© M. Hasanul Fatta</div>
+  </div>
+</header>
+
+<!-- LOGIN SCREEN -->
+<div id="screen-login" class="screen active">
+  <div class="login-hero">
+    <div class="hero-badge">🏆 Persiapan OSN IPA</div>
+    <h1 class="hero-title">Latihan <em>Cerdas</em>,<br>Raih Prestasi.</h1>
+    <p class="hero-sub">Platform latihan soal harian berbasis bacaan<br>untuk para calon peserta OSN IPA.</p>
+  </div>
+  <div class="login-card">
+    <h2>Masuk ke Akun</h2>
+    <p class="sub">Gunakan ID dan password yang telah diberikan</p>
+    <div class="err-box" id="err-box">
+      <span>⚠️</span><span id="err-txt">ID atau password salah.</span>
+    </div>
+    <div class="field">
+      <label>ID Peserta</label>
+      <div class="input-wrap">
+        <span class="ico">🪪</span>
+        <input type="text" id="inp-id" placeholder="Contoh: YJS001" autocomplete="off"/>
+      </div>
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <div class="input-wrap">
+        <span class="ico">🔒</span>
+        <input type="password" id="inp-pw" placeholder="6 digit password" maxlength="6"/>
+        <button class="show-pw" onclick="togglePw()" type="button">👁</button>
+      </div>
+    </div>
+    <button class="btn-login" onclick="doLogin()">Masuk ke Latihan →</button>
+  </div>
+</div>
+
+<!-- MAIN SCREEN -->
+<main id="screen-main" class="screen">
+  <div class="top-bar">
+    <div class="top-bar-left">
+      <div class="greet">Halo,</div>
+      <div class="uname" id="display-name">—</div>
+    </div>
+    <div class="top-bar-right">
+      <div class="dlbl">Latihan Hari Ini</div>
+      <div class="dval" id="display-date">—</div>
+      <div><span class="soal-badge" id="display-count">— soal</span></div>
+    </div>
+  </div>
+
+  <div id="loading"><div class="spinner"></div><p>Memuat soal untuk hari ini...</p></div>
+  <div id="empty">
+    <div class="ico">📭</div>
+    <h3>Belum Ada Soal</h3>
+    <p>Soal untuk hari ini belum tersedia.<br>Cek kembali nanti ya!</p>
+  </div>
+
+  <div id="soal-container"></div>
+
+  <div id="skor-panel">
+    <div class="skor-ring">
+      <span class="snum" id="skor-num">0</span>
+      <span class="sden" id="skor-den">/ 0</span>
+    </div>
+    <div class="skor-hl" id="skor-hl">—</div>
+    <div class="skor-ds" id="skor-ds">—</div>
+    <div class="skor-pct" id="skor-pct">0%</div>
+  </div>
+
+  <div class="submit-section" id="submit-section">
+    <div class="prog-info">
+      <span id="prog-txt">0 dari 0 soal dijawab</span>
+      <span id="prog-pct">0%</span>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <button class="btn-submit" id="btn-submit" onclick="submitJawaban()" disabled>
+      ✅ Kumpulkan Jawaban
+    </button>
+  </div>
+</main>
+
+</div>
+
+<footer>
+  <div class="copy">© 2025 <strong>M. Hasanul Fatta</strong> — All rights reserved</div>
+</footer>
+<div id="toast"></div>
+
+<script>
+const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxCvU_qJdG-Wmy_tTovGVuo_c-KUYMAiYFI8VP37_p-eolwNt0VVko9I-pOsDC1ZyKEQ/exec";
+
+const USERS = {
+  "YJS001": { nama: "Yusuf Julian Saputra",  pw: "384712" },
+  "TAZ002": { nama: "Talita Az-Zahra",        pw: "291053" },
+  "ZFE003": { nama: "Zahrah Felicia",          pw: "847362" },
+  "ASH004": { nama: "Azwa Shakila",            pw: "519204" },
+  "RNE005": { nama: "Rozatul Neza",            pw: "736481" },
+};
+
+let state = { user: null, tanggal: "", soalData: [], bacaanData: [], jawaban: {}, submitted: false };
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("inp-pw").addEventListener("keydown", e => { if(e.key==="Enter") doLogin(); });
+  document.getElementById("inp-id").addEventListener("keydown", e => { if(e.key==="Enter") document.getElementById("inp-pw").focus(); });
+});
+
+function togglePw() {
+  const i = document.getElementById("inp-pw");
+  i.type = i.type === "password" ? "text" : "password";
+}
+
+function doLogin() {
+  const id = document.getElementById("inp-id").value.trim().toUpperCase();
+  const pw = document.getElementById("inp-pw").value.trim();
+  const err = document.getElementById("err-box");
+  err.classList.remove("show");
+
+  if (!id || !pw) {
+    document.getElementById("err-txt").textContent = "ID dan password wajib diisi.";
+    err.classList.add("show"); return;
+  }
+  const user = USERS[id];
+  if (!user || user.pw !== pw) {
+    document.getElementById("err-txt").textContent = "ID atau password salah. Coba lagi.";
+    err.classList.add("show");
+    document.getElementById("inp-pw").value = ""; return;
+  }
+
+  state.user = { id, ...user };
+  const today = new Date();
+  state.tanggal = today.toISOString().split("T")[0];
+
+  document.getElementById("screen-login").classList.remove("active");
+  document.getElementById("screen-main").classList.add("active");
+
+  document.getElementById("display-name").textContent = user.nama.split(" ")[0];
+  document.getElementById("uname-display").textContent = user.nama.split(" ")[0];
+  document.getElementById("avatar-init").textContent = user.nama.charAt(0);
+  document.getElementById("user-pill").style.display = "flex";
+  document.getElementById("display-date").textContent =
+    today.toLocaleDateString("id-ID", { weekday:"long", year:"numeric", month:"long", day:"numeric" });
+
+  loadSoal();
+}
+
+async function loadSoal() {
+  document.getElementById("loading").style.display = "block";
+  document.getElementById("empty").style.display = "none";
+  document.getElementById("soal-container").innerHTML = "";
+  document.getElementById("submit-section").style.display = "none";
+  document.getElementById("skor-panel").style.display = "none";
+
+  try {
+    const res  = await fetch(`${APPS_SCRIPT_URL}?action=getSoal&tanggal=${state.tanggal}`);
+    const data = await res.json();
+    document.getElementById("loading").style.display = "none";
+
+    if (!data.soal || !data.soal.length) {
+      document.getElementById("empty").style.display = "block"; return;
+    }
+
+    state.soalData = data.soal; state.bacaanData = data.bacaan || [];
+    state.jawaban = {}; state.submitted = false;
+    document.getElementById("display-count").textContent = `📝 ${data.soal.length} soal`;
+    renderSoal();
+    document.getElementById("submit-section").style.display = "block";
+    updateProg();
+  } catch(e) {
+    document.getElementById("loading").style.display = "none";
+    showToast("❌ Gagal memuat soal. Periksa koneksi internet.");
+  }
+}
+
+function renderSoal() {
+  const container = document.getElementById("soal-container");
+  container.innerHTML = "";
+  const bacaanMap = {};
+  state.bacaanData.forEach(b => bacaanMap[b.bacaan_id] = b);
+  const order = []; const byBacaan = {};
+  state.soalData.forEach(s => {
+    if (!byBacaan[s.bacaan_id]) { order.push(s.bacaan_id); byBacaan[s.bacaan_id] = []; }
+    byBacaan[s.bacaan_id].push(s);
+  });
+
+  let n = 1;
+  order.forEach(bid => {
+    const b = bacaanMap[bid];
+    if (b && b.bacaan_teks) {
+      const bc = document.createElement("div");
+      bc.className = "bacaan-card";
+      bc.innerHTML = `
+        <div class="bacaan-header">
+          <span class="bacaan-tag">📖 Bacaan · ${bid}</span>
+          <span class="bacaan-title-txt">${b.bacaan_judul}</span>
+        </div>
+        <div class="bacaan-body"><div class="bacaan-teks">${b.bacaan_teks}</div></div>`;
+      container.appendChild(bc);
+    }
+
+    byBacaan[bid].forEach((s, i) => {
+      const card = document.createElement("div");
+      card.className = "soal-card"; card.id = `card-${s.soal_id}`;
+      card.style.animationDelay = `${i*40}ms`;
+
+      let opsiHTML = "";
+      if (s.tipe === "PG") {
+        const opts = [{k:"A",v:s.opsi_a},{k:"B",v:s.opsi_b},{k:"C",v:s.opsi_c},{k:"D",v:s.opsi_d}].filter(o=>o.v);
+        opsiHTML = `<div class="opsi-list">` +
+          opts.map(o=>`<label class="opsi-item" id="opsi-${s.soal_id}-${o.k}">
+            <input type="radio" name="${s.soal_id}" value="${o.k}" onchange="pilih('${s.soal_id}','${o.k}','PG')"/>
+            <span class="opsi-key">${o.k}</span><span>${o.v}</span></label>`).join("") + `</div>`;
+      } else {
+        opsiHTML = `<div class="bs-list">
+          <label class="bs-item" id="opsi-${s.soal_id}-Benar"><input type="radio" name="${s.soal_id}" value="Benar" onchange="pilih('${s.soal_id}','Benar','BS')"/> ✅ Benar</label>
+          <label class="bs-item" id="opsi-${s.soal_id}-Salah"><input type="radio" name="${s.soal_id}" value="Salah" onchange="pilih('${s.soal_id}','Salah','BS')"/> ❌ Salah</label>
+        </div>`;
+      }
+
+      card.innerHTML = `
+        <div class="soal-meta">
+          <span class="soal-num-badge">Soal ${n++}</span>
+          <span class="tipe-badge">${s.tipe==="PG"?"Pilihan Ganda":"Benar / Salah"}</span>
+        </div>
+        <div class="soal-teks">${s.soal_teks}</div>${opsiHTML}`;
+      container.appendChild(card);
+    });
+  });
+}
+
+function pilih(id, val, tipe) {
+  if (state.submitted) return;
+  state.jawaban[id] = val;
+  document.getElementById(`card-${id}`)?.classList.add("answered");
+  const keys = tipe==="PG" ? ["A","B","C","D"] : ["Benar","Salah"];
+  keys.forEach(k => document.getElementById(`opsi-${id}-${k}`)?.classList.toggle("selected", k===val));
+  updateProg();
+}
+
+function updateProg() {
+  const total = state.soalData.length;
+  const ans   = Object.keys(state.jawaban).length;
+  const pct   = total ? Math.round(ans/total*100) : 0;
+  document.getElementById("prog-fill").style.width = pct + "%";
+  document.getElementById("prog-txt").textContent  = `${ans} dari ${total} soal dijawab`;
+  document.getElementById("prog-pct").textContent  = pct + "%";
+  document.getElementById("btn-submit").disabled   = ans < total;
+}
+
+async function submitJawaban() {
+  if (state.submitted) return;
+  if (Object.keys(state.jawaban).length < state.soalData.length) {
+    showToast("Masih ada soal yang belum dijawab!"); return;
+  }
+  state.submitted = true;
+  const btn = document.getElementById("btn-submit");
+  btn.disabled = true; btn.textContent = "⏳ Mengirim...";
+
+  let benar = 0;
+  const arr = state.soalData.map(s => {
+    const jw = state.jawaban[s.soal_id] || "";
+    const ok = jw.trim().toUpperCase() === s.jawaban_benar.trim().toUpperCase();
+    if (ok) benar++;
+    return { soal_id: s.soal_id, jawaban_siswa: jw, benar_salah: ok?"Benar":"Salah" };
+  });
+
+  tampilHasil(arr);
+
+  const total = state.soalData.length;
+  const pct   = Math.round(benar/total*100);
+  document.getElementById("skor-num").textContent = benar;
+  document.getElementById("skor-den").textContent = `/ ${total}`;
+  document.getElementById("skor-pct").textContent = pct + "%";
+  document.getElementById("skor-hl").textContent  = getHL(pct);
+  document.getElementById("skor-ds").textContent  = getDS(pct);
+  document.getElementById("skor-panel").style.display  = "block";
+  document.getElementById("submit-section").style.display = "none";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+
+  try {
+    await fetch(APPS_SCRIPT_URL, {
+      method:"POST", headers:{"Content-Type":"application/json"},
+      body: JSON.stringify({ action:"submitJawaban", nama_siswa:state.user.nama, tanggal_latihan:state.tanggal, jawaban:arr, skor_total:`${benar}/${total}` }),
+      mode:"no-cors"
+    });
+    showToast("✅ Jawaban berhasil dikirim!");
+  } catch(e) { showToast("⚠️ Gagal kirim ke server."); }
+}
+
+function tampilHasil(arr) {
+  const map = {}; arr.forEach(j => map[j.soal_id] = j);
+  state.soalData.forEach(s => {
+    const card = document.getElementById(`card-${s.soal_id}`); if (!card) return;
+    const j = map[s.soal_id]; const ok = j?.benar_salah === "Benar";
+    card.classList.remove("answered"); card.classList.add(ok?"benar":"salah");
+    card.querySelectorAll("input").forEach(i => i.disabled = true);
+
+    const badge = document.createElement("div");
+    badge.className = "hasil-row";
+    badge.innerHTML = `<span class="hasil-chip ${ok?"benar":"salah"}">${ok?"✅ Benar":"❌ Salah"}</span>`;
+    card.insertBefore(badge, card.firstChild);
+
+    if (s.tipe === "PG") {
+      ["A","B","C","D"].forEach(k => {
+        const el = document.getElementById(`opsi-${s.soal_id}-${k}`); if (!el) return;
+        if (k === s.jawaban_benar) el.classList.add("correct-ans");
+        else if (k === j?.jawaban_siswa && !ok) el.classList.add("wrong-ans");
+      });
+    }
+
+    const pen = document.createElement("div");
+    pen.className = `pen-box ${ok?"benar":"salah"}`;
+    pen.innerHTML = !ok
+      ? `<span class="pen-lbl">Jawaban Benar: ${s.jawaban_benar}</span>${s.penjelasan}`
+      : `<span class="pen-lbl">Penjelasan</span>${s.penjelasan}`;
+    card.appendChild(pen);
+  });
+}
+
+function getHL(p) {
+  if(p===100) return "Sempurna! 🏆"; if(p>=80) return "Luar Biasa! 🌟";
+  if(p>=60) return "Bagus! 💪"; if(p>=40) return "Semangat Terus! 📚";
+  return "Ayo Belajar Lagi! 🔁";
+}
+function getDS(p) {
+  if(p===100) return "Semua soal benar! Performa sempurna hari ini.";
+  if(p>=80) return "Hampir sempurna! Terus pertahankan.";
+  if(p>=60) return "Di atas rata-rata. Sedikit lagi!";
+  if(p>=40) return "Masih banyak ruang untuk berkembang.";
+  return "Jangan menyerah — review materi dan coba lagi!";
+}
+function showToast(msg) {
+  const t = document.getElementById("toast");
+  t.textContent = msg; t.classList.add("show");
+  setTimeout(() => t.classList.remove("show"), 3000);
+}
+</script>
+</body>
+</html>
