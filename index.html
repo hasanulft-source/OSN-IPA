@@ -381,9 +381,9 @@ footer{position:fixed;bottom:0;left:0;right:0;
   </div>
   <div class="header-right">
     <nav class="nav-tabs" id="nav-tabs">
-      <button class="nav-tab active" onclick="goTab('soal')">Latihan</button>
-      <button class="nav-tab" onclick="goTab('stats')">Statistik</button>
-      <button class="nav-tab" onclick="goTab('profil')">Profil</button>
+      <button class="nav-tab active" onclick="goTab('soal')" title="">Latihan</button>
+      <button class="nav-tab" onclick="goTab('stats')" title="">Statistik</button>
+      <button class="nav-tab" onclick="goTab('profil')" title="">Profil</button>
     </nav>
     <div id="user-pill" onclick="goTab('profil')">
       <div class="avatar-sm" id="header-avatar"><span id="header-initial"></span></div>
@@ -395,11 +395,11 @@ footer{position:fixed;bottom:0;left:0;right:0;
 
 <!-- BOTTOM NAV mobile -->
 <nav class="bottom-nav" id="bottom-nav" style="display:none;">
-  <button class="bottom-nav-item active" id="bn-soal" onclick="goTab('soal')">
+  <button class="bottom-nav-item active" id="bn-soal" onclick="goTab('soal')" title="">
     <div class="bni-dot"></div>
     <span class="bni-label">Latihan</span>
   </button>
-  <button class="bottom-nav-item" id="bn-stats" onclick="goTab('stats')">
+  <button class="bottom-nav-item" id="bn-stats" onclick="goTab('stats')" title="">
     <div class="bni-dot"></div>
     <span class="bni-label">Statistik</span>
   </button>
@@ -443,6 +443,10 @@ footer{position:fixed;bottom:0;left:0;right:0;
     </button>
   </div>
 </div>
+    <button class="btn-login" onclick="doLogin()">Masuk ke Latihan</button>
+  </div>
+</div>
+
 <!-- SOAL -->
 <main id="screen-main" class="screen">
   <div class="top-bar">
@@ -524,7 +528,7 @@ footer{position:fixed;bottom:0;left:0;right:0;
     <div class="profil-body">
       <div class="profil-avatar-wrap">
         <div class="profil-avatar" id="profil-avatar"><span id="profil-initial"></span></div>
-        <label class="change-photo-btn" for="photo-input" title="Ganti foto">+</label>
+        <label class="change-photo-btn" for="photo-input" title="">+</label>
         <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoUpload(event)"/>
       </div>
       <div class="profil-name" id="profil-name">—</div>
