@@ -4,42 +4,60 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>OSN IPA — Latihan Harian</title>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <style>
-:root {
+:root{
   --c0:#09637E;--c1:#088395;--c2:#7AB2B2;--c3:#EBF4F6;--c4:#054f65;
   --ink:#0D1F26;--ink2:#3A5560;--ink3:#7A9DA8;
-  --surface:#FFFFFF;--border:#C8DFE5;
+  --surface:#fff;--border:#D0E8EE;
   --danger:#C0392B;--danger-bg:#FDF0EF;
   --success:#0F7B4E;--success-bg:#E8F5EE;
-  --r:14px;--r-sm:8px;
-  --shadow:0 4px 24px rgba(9,99,126,0.10);
-  --shadow-lg:0 12px 48px rgba(9,99,126,0.18);
+  --r:12px;--r-sm:8px;
+  --shadow:0 2px 16px rgba(9,99,126,0.08);
+  --shadow-lg:0 8px 40px rgba(9,99,126,0.14);
+  --font:'Nunito',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
-body{font-family:'Sora',sans-serif;background:var(--c3);color:var(--ink);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;}
-.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse 80% 60% at 10% 10%,rgba(9,99,126,0.13) 0%,transparent 60%),radial-gradient(ellipse 60% 80% at 90% 80%,rgba(8,131,149,0.10) 0%,transparent 60%);}
+body{font-family:var(--font);background:var(--c3);color:var(--ink);min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* BG */
+.bg-mesh{position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at 0% 0%,rgba(9,99,126,0.10) 0%,transparent 60%),
+             radial-gradient(ellipse 50% 60% at 100% 100%,rgba(8,131,149,0.08) 0%,transparent 60%);}
 
 /* HEADER */
-header{position:sticky;top:0;z-index:200;background:rgba(9,99,126,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.08);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 20px rgba(9,99,126,0.3);}
-.logo-wrap{display:flex;align-items:center;gap:12px;}
-.logo-icon{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;justify-content:center;font-size:18px;}
-.logo-text{color:#fff;}
-.logo-text strong{font-size:16px;font-weight:700;display:block;line-height:1.1;letter-spacing:-0.2px;}
-.logo-text span{font-size:11px;opacity:0.6;font-weight:300;letter-spacing:0.5px;}
-.header-right{display:flex;align-items:center;gap:12px;}
-#user-pill{display:none;align-items:center;gap:8px;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);border-radius:24px;padding:4px 14px 4px 4px;color:#fff;font-size:13px;font-weight:500;cursor:pointer;transition:background 0.2s;}
-#user-pill:hover{background:rgba(255,255,255,0.2);}
-.avatar-sm{width:32px;height:32px;border-radius:50%;object-fit:cover;background:var(--c2);color:var(--c4);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0;overflow:hidden;}
+header{position:sticky;top:0;z-index:200;
+  background:rgba(9,99,126,0.98);backdrop-filter:blur(16px);
+  border-bottom:1px solid rgba(255,255,255,0.07);
+  padding:0 32px;height:60px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 1px 16px rgba(9,99,126,0.25);}
+.logo-wrap{display:flex;align-items:center;gap:10px;}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--c2);}
+.logo-text{color:#fff;font-weight:800;font-size:15px;letter-spacing:-0.3px;}
+.logo-sub{color:rgba(255,255,255,0.5);font-size:10px;font-weight:400;letter-spacing:1px;text-transform:uppercase;margin-left:4px;}
+.header-right{display:flex;align-items:center;gap:10px;}
+#user-pill{display:none;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.18);
+  border-radius:24px;padding:4px 12px 4px 4px;
+  color:#fff;font-size:13px;font-weight:600;cursor:pointer;transition:background 0.2s;}
+#user-pill:hover{background:rgba(255,255,255,0.18);}
+.avatar-sm{width:30px;height:30px;border-radius:50%;
+  background:var(--c2);color:var(--c4);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:800;flex-shrink:0;overflow:hidden;}
 .avatar-sm img{width:100%;height:100%;object-fit:cover;}
-.hdr-copy{font-size:11px;color:rgba(255,255,255,0.4);font-weight:300;}
+.hdr-copy{font-size:10.5px;color:rgba(255,255,255,0.35);font-weight:400;letter-spacing:0.3px;}
 
-/* NAV TABS */
-.nav-tabs{display:none;align-items:center;gap:4px;background:rgba(255,255,255,0.1);border-radius:24px;padding:4px;}
-.nav-tab{padding:6px 16px;border-radius:20px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.7);cursor:pointer;transition:all 0.2s;border:none;background:none;font-family:'Sora',sans-serif;}
-.nav-tab.active{background:rgba(255,255,255,0.2);color:#fff;}
+/* DESKTOP NAV */
+.nav-tabs{display:none;align-items:center;gap:2px;
+  background:rgba(255,255,255,0.1);border-radius:20px;padding:3px;}
+.nav-tab{padding:5px 14px;border-radius:16px;font-size:12px;font-weight:700;
+  color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.18s;
+  border:none;background:none;font-family:var(--font);letter-spacing:0.2px;}
+.nav-tab.active{background:rgba(255,255,255,0.18);color:#fff;}
 .nav-tab:hover:not(.active){color:#fff;}
 
 /* SCREENS */
@@ -47,202 +65,307 @@ header{position:sticky;top:0;z-index:200;background:rgba(9,99,126,0.97);backdrop
 .screen{display:none;}
 .screen.active{display:block;}
 
-/* LOGIN */
-#screen-login{max-width:460px;margin:0 auto;padding:52px 24px 100px;}
-.login-hero{text-align:center;margin-bottom:32px;animation:fadeUp 0.6s ease both;}
-.hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(9,99,126,0.08);border:1px solid rgba(9,99,126,0.15);border-radius:20px;padding:5px 14px;font-size:12px;font-weight:600;color:var(--c0);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:20px;}
-.hero-title{font-family:'Instrument Serif',serif;font-size:42px;line-height:1.1;color:var(--ink);margin-bottom:12px;letter-spacing:-0.5px;}
-.hero-title em{color:var(--c1);font-style:italic;}
-.hero-sub{font-size:14px;color:var(--ink2);font-weight:300;line-height:1.7;}
-.login-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-lg);padding:36px 32px;animation:fadeUp 0.6s 0.1s ease both;}
-.login-card h2{font-size:17px;font-weight:700;color:var(--ink);margin-bottom:4px;}
-.login-card .sub{font-size:13px;color:var(--ink3);margin-bottom:28px;}
-.field{margin-bottom:18px;}
-.field label{display:block;font-size:12px;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:7px;}
+/* ── LOGIN ──────────────────────────────────── */
+#screen-login{max-width:420px;margin:0 auto;padding:56px 20px 100px;}
+.login-hero{text-align:center;margin-bottom:28px;}
+.login-badge{display:inline-block;
+  background:rgba(9,99,126,0.07);border:1px solid rgba(9,99,126,0.12);
+  border-radius:20px;padding:4px 14px;
+  font-size:11px;font-weight:700;color:var(--c0);
+  letter-spacing:0.8px;text-transform:uppercase;margin-bottom:18px;}
+.login-title{font-size:36px;font-weight:800;color:var(--ink);
+  margin-bottom:8px;line-height:1.15;letter-spacing:-0.5px;}
+.login-title em{color:var(--c1);font-style:normal;}
+.login-sub{font-size:14px;color:var(--ink3);font-weight:400;line-height:1.65;}
+.login-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);box-shadow:var(--shadow-lg);padding:32px 28px;}
+.login-card h2{font-size:16px;font-weight:800;color:var(--ink);margin-bottom:3px;}
+.login-card .sub{font-size:13px;color:var(--ink3);margin-bottom:24px;}
+.field{margin-bottom:16px;}
+.field label{display:block;font-size:11px;font-weight:700;color:var(--ink2);
+  text-transform:uppercase;letter-spacing:0.7px;margin-bottom:6px;}
 .input-wrap{position:relative;}
-.input-wrap .ico{position:absolute;left:14px;top:50%;transform:translateY(-50%);font-size:16px;pointer-events:none;}
-input[type=text],input[type=password]{width:100%;padding:12px 16px 12px 42px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Sora',sans-serif;font-size:14px;color:var(--ink);background:#FAFCFD;outline:none;transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;}
-input:focus{border-color:var(--c1);background:#fff;box-shadow:0 0 0 3px rgba(8,131,149,0.1);}
-input::placeholder{color:var(--ink3);font-weight:300;}
-.show-pw{position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:16px;color:var(--ink3);}
-.err-box{display:none;align-items:center;gap:8px;background:#FDF0EF;border:1px solid #F5C6C2;border-radius:var(--r-sm);padding:10px 14px;font-size:13px;color:var(--danger);margin-bottom:16px;}
+.input-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);
+  font-size:14px;color:var(--ink3);pointer-events:none;}
+input[type=text],input[type=password]{
+  width:100%;padding:11px 14px 11px 38px;
+  border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:var(--font);font-size:14px;font-weight:500;color:var(--ink);
+  background:#FAFCFD;outline:none;
+  transition:border-color 0.18s,box-shadow 0.18s,background 0.18s;}
+input:focus{border-color:var(--c1);background:#fff;box-shadow:0 0 0 3px rgba(8,131,149,0.09);}
+input::placeholder{color:var(--ink3);font-weight:400;}
+.show-pw{position:absolute;right:12px;top:50%;transform:translateY(-50%);
+  background:none;border:none;cursor:pointer;font-size:14px;color:var(--ink3);padding:2px;}
+.err-box{display:none;align-items:center;gap:8px;
+  background:#FDF0EF;border:1px solid #F5C6C2;border-radius:var(--r-sm);
+  padding:9px 13px;font-size:13px;color:var(--danger);margin-bottom:14px;}
 .err-box.show{display:flex;}
-.btn-login{width:100%;padding:14px;background:linear-gradient(135deg,var(--c0),var(--c1));color:#fff;border:none;border-radius:var(--r-sm);font-family:'Sora',sans-serif;font-size:15px;font-weight:600;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 16px rgba(9,99,126,0.3);}
-.btn-login:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(9,99,126,0.4);}
+.btn-login{width:100%;padding:13px;
+  background:linear-gradient(135deg,var(--c0),var(--c1));
+  color:#fff;border:none;border-radius:var(--r-sm);
+  font-family:var(--font);font-size:14px;font-weight:800;
+  cursor:pointer;transition:all 0.18s;letter-spacing:0.2px;
+  box-shadow:0 4px 14px rgba(9,99,126,0.28);}
+.btn-login:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(9,99,126,0.38);}
 
-/* MAIN SOAL */
-main{max-width:860px;margin:0 auto;padding:48px 24px 100px;}
-.top-bar{display:flex;align-items:center;justify-content:space-between;background:linear-gradient(135deg,var(--c0),var(--c1));border-radius:var(--r);padding:20px 28px;margin-bottom:32px;box-shadow:var(--shadow);color:#fff;}
-.top-bar-left .greet{font-size:12px;opacity:0.7;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;}
-.top-bar-left .uname{font-size:20px;font-weight:700;}
-.top-bar-right{text-align:right;}
-.top-bar-right .dlbl{font-size:11px;opacity:0.6;text-transform:uppercase;letter-spacing:0.5px;}
-.top-bar-right .dval{font-family:'Instrument Serif',serif;font-size:18px;margin-top:2px;}
-.soal-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;margin-top:8px;}
+/* ── MAIN SOAL ──────────────────────────────── */
+main{max-width:820px;margin:0 auto;padding:40px 20px 100px;}
 
-/* ALREADY SUBMITTED BANNER */
-#submitted-banner{display:none;background:linear-gradient(135deg,#0F7B4E,#1a9960);border-radius:var(--r);padding:24px 28px;margin-bottom:24px;color:#fff;text-align:center;}
-#submitted-banner .sb-icon{font-size:36px;margin-bottom:8px;}
-#submitted-banner h3{font-family:'Instrument Serif',serif;font-size:22px;margin-bottom:4px;}
-#submitted-banner p{font-size:13px;opacity:0.85;}
-#submitted-banner .sb-score{display:inline-block;background:rgba(255,255,255,0.2);border-radius:12px;padding:8px 20px;margin-top:12px;font-size:18px;font-weight:700;}
+.top-bar{background:linear-gradient(135deg,var(--c0),var(--c1));
+  border-radius:var(--r);padding:22px 26px;margin-bottom:28px;
+  box-shadow:var(--shadow);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;}
+.tb-left .tb-greet{font-size:11px;opacity:0.65;text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.tb-left .tb-name{font-size:22px;font-weight:800;letter-spacing:-0.3px;}
+.tb-right{text-align:right;}
+.tb-right .tb-lbl{font-size:10px;opacity:0.6;text-transform:uppercase;letter-spacing:0.8px;}
+.tb-right .tb-date{font-size:16px;font-weight:700;margin-top:2px;}
+.tb-badge{display:inline-block;background:rgba(255,255,255,0.16);
+  border:1px solid rgba(255,255,255,0.22);border-radius:20px;
+  padding:3px 12px;font-size:11px;font-weight:700;margin-top:8px;}
 
-/* LOADING / EMPTY */
-#loading{text-align:center;padding:72px 24px;display:none;}
-.spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--c1);border-radius:50%;animation:spin 0.75s linear infinite;margin:0 auto 16px;}
+/* Submitted banner */
+#submitted-banner{display:none;
+  background:linear-gradient(135deg,#0a6b43,#0f8f5a);
+  border-radius:var(--r);padding:28px 24px;margin-bottom:20px;
+  color:#fff;text-align:center;}
+#submitted-banner .sb-title{font-size:20px;font-weight:800;margin-bottom:6px;letter-spacing:-0.2px;}
+#submitted-banner .sb-desc{font-size:13px;opacity:0.85;margin-bottom:14px;}
+.sb-score-pill{display:inline-block;
+  background:rgba(255,255,255,0.18);border:1px solid rgba(255,255,255,0.25);
+  border-radius:20px;padding:8px 22px;font-size:17px;font-weight:800;}
+
+/* Loading / Empty */
+#loading{text-align:center;padding:64px 20px;display:none;}
+.spinner{width:36px;height:36px;border:3px solid var(--border);
+  border-top-color:var(--c1);border-radius:50%;
+  animation:spin 0.7s linear infinite;margin:0 auto 14px;}
 @keyframes spin{to{transform:rotate(360deg);}}
-#loading p{font-size:14px;color:var(--ink3);}
-#empty{display:none;text-align:center;padding:72px 24px;}
-#empty .ico{font-size:52px;margin-bottom:16px;}
-#empty h3{font-size:18px;font-weight:700;margin-bottom:8px;}
-#empty p{font-size:14px;color:var(--ink3);}
+#loading p{font-size:13px;color:var(--ink3);}
+#empty{display:none;text-align:center;padding:64px 20px;}
+#empty .e-icon{width:48px;height:48px;border-radius:50%;background:var(--border);
+  display:flex;align-items:center;justify-content:center;margin:0 auto 14px;
+  font-size:20px;color:var(--ink3);}
+#empty h3{font-size:17px;font-weight:800;margin-bottom:6px;}
+#empty p{font-size:13px;color:var(--ink3);}
 
-/* BACAAN */
-.bacaan-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-bottom:16px;box-shadow:var(--shadow);animation:fadeUp 0.4s ease both;}
-.bacaan-header{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--c0),var(--c1));padding:14px 22px;}
-.bacaan-tag{background:rgba(255,255,255,0.2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;color:#fff;letter-spacing:0.5px;text-transform:uppercase;white-space:nowrap;}
-.bacaan-title-txt{font-family:'Instrument Serif',serif;font-size:17px;color:#fff;}
-.bacaan-body{padding:22px 24px;}
-.bacaan-teks{font-size:14px;color:var(--ink2);line-height:1.85;text-align:justify;}
+/* Bacaan */
+.bacaan-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);overflow:hidden;margin-bottom:14px;
+  box-shadow:var(--shadow);}
+.bacaan-header{background:linear-gradient(135deg,var(--c0),var(--c1));padding:14px 20px;
+  display:flex;align-items:center;gap:12px;}
+.bacaan-tag{background:rgba(255,255,255,0.18);border-radius:6px;
+  padding:3px 10px;font-size:10px;font-weight:800;color:#fff;
+  letter-spacing:0.8px;text-transform:uppercase;white-space:nowrap;}
+.bacaan-title-txt{font-size:15px;font-weight:700;color:#fff;}
+.bacaan-body{padding:20px;}
+.bacaan-teks{font-size:13.5px;color:var(--ink2);line-height:1.8;text-align:justify;}
 
-/* SOAL */
-.soal-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r);padding:22px 24px;margin-bottom:12px;transition:border-color 0.2s,box-shadow 0.2s;box-shadow:0 2px 10px rgba(9,99,126,0.05);animation:fadeUp 0.4s ease both;}
-.soal-card.answered{border-color:var(--c2);box-shadow:0 2px 14px rgba(8,131,149,0.12);}
+/* Soal */
+.soal-card{background:var(--surface);border:1.5px solid var(--border);
+  border-radius:var(--r);padding:20px 22px;margin-bottom:10px;
+  transition:border-color 0.18s,box-shadow 0.18s;
+  box-shadow:0 1px 8px rgba(9,99,126,0.04);}
+.soal-card.answered{border-color:var(--c2);}
 .soal-card.benar{border-color:#4CAF82;background:var(--success-bg);}
 .soal-card.salah{border-color:#E57373;background:var(--danger-bg);}
-.soal-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.soal-num-badge{background:var(--c3);color:var(--c0);font-size:11px;font-weight:700;border-radius:6px;padding:3px 10px;text-transform:uppercase;letter-spacing:0.4px;}
-.tipe-badge{background:rgba(9,99,126,0.08);color:var(--c0);font-size:11px;font-weight:600;border-radius:6px;padding:3px 8px;border:1px solid rgba(9,99,126,0.12);}
-.soal-teks{font-size:14.5px;font-weight:500;color:var(--ink);line-height:1.65;margin-bottom:16px;}
-.opsi-list{display:flex;flex-direction:column;gap:8px;}
-.opsi-item{display:flex;align-items:center;gap:12px;padding:11px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;transition:all 0.15s;font-size:14px;color:var(--ink2);user-select:none;}
-.opsi-item:hover{border-color:var(--c2);background:rgba(122,178,178,0.07);color:var(--ink);}
-.opsi-item.selected{border-color:var(--c1);background:rgba(8,131,149,0.06);color:var(--ink);font-weight:500;}
+.soal-meta{display:flex;align-items:center;gap:7px;margin-bottom:10px;}
+.soal-num-badge{background:var(--c3);color:var(--c0);
+  font-size:10px;font-weight:800;border-radius:6px;
+  padding:3px 9px;text-transform:uppercase;letter-spacing:0.5px;}
+.tipe-badge{background:rgba(9,99,126,0.07);color:var(--c0);
+  font-size:10px;font-weight:700;border-radius:6px;
+  padding:3px 8px;border:1px solid rgba(9,99,126,0.10);}
+.soal-teks{font-size:14px;font-weight:600;color:var(--ink);line-height:1.6;margin-bottom:14px;}
+
+/* Options PG */
+.opsi-list{display:flex;flex-direction:column;gap:7px;}
+.opsi-item{display:flex;align-items:center;gap:10px;
+  padding:10px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;transition:all 0.14s;font-size:13.5px;color:var(--ink2);user-select:none;}
+.opsi-item:hover{border-color:var(--c2);background:rgba(122,178,178,0.06);color:var(--ink);}
+.opsi-item.selected{border-color:var(--c1);background:rgba(8,131,149,0.05);color:var(--ink);font-weight:600;}
 .opsi-item.correct-ans{border-color:var(--success)!important;background:var(--success-bg)!important;}
 .opsi-item.wrong-ans{border-color:var(--danger)!important;background:var(--danger-bg)!important;}
 .opsi-item input{display:none;}
-.opsi-key{min-width:28px;height:28px;border-radius:7px;background:var(--c3);color:var(--c0);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;transition:all 0.15s;}
+.opsi-key{min-width:26px;height:26px;border-radius:6px;
+  background:var(--c3);color:var(--c0);
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:800;flex-shrink:0;transition:all 0.14s;}
 .opsi-item.selected .opsi-key{background:var(--c1);color:#fff;}
-.bs-list{display:flex;gap:10px;}
-.bs-item{flex:1;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px 16px;border:1.5px solid var(--border);border-radius:var(--r-sm);cursor:pointer;font-size:14px;font-weight:500;transition:all 0.15s;color:var(--ink2);user-select:none;}
-.bs-item:hover{border-color:var(--c2);background:rgba(122,178,178,0.07);}
-.bs-item.selected{border-color:var(--c1);background:rgba(8,131,149,0.06);color:var(--ink);}
+
+/* Options BS */
+.bs-list{display:flex;gap:8px;}
+.bs-item{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
+  padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  cursor:pointer;font-size:13.5px;font-weight:600;transition:all 0.14s;
+  color:var(--ink2);user-select:none;}
+.bs-item:hover{border-color:var(--c2);background:rgba(122,178,178,0.06);}
+.bs-item.selected{border-color:var(--c1);background:rgba(8,131,149,0.05);color:var(--ink);}
+.bs-dot{width:8px;height:8px;border-radius:50%;background:currentColor;opacity:0.5;}
+.bs-item.selected .bs-dot{opacity:1;}
 .bs-item input{display:none;}
-.hasil-row{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-.hasil-chip{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700;}
+
+/* Hasil */
+.hasil-row{display:flex;align-items:center;gap:7px;margin-bottom:10px;}
+.hasil-chip{display:inline-flex;align-items:center;gap:5px;
+  padding:3px 10px;border-radius:6px;font-size:11px;font-weight:800;}
 .hasil-chip.benar{background:#D4EDDA;color:#0F7B4E;}
 .hasil-chip.salah{background:#FAD7D4;color:#C0392B;}
-.pen-box{margin-top:14px;padding:14px 16px;border-radius:var(--r-sm);font-size:13.5px;line-height:1.7;color:var(--ink2);}
-.pen-box.benar{background:rgba(79,193,133,0.10);border-left:3px solid #4CAF82;}
-.pen-box.salah{background:rgba(229,115,115,0.10);border-left:3px solid #E57373;}
-.pen-lbl{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:5px;}
+.pen-box{margin-top:12px;padding:12px 14px;border-radius:var(--r-sm);
+  font-size:13px;line-height:1.7;color:var(--ink2);}
+.pen-box.benar{background:rgba(79,193,133,0.08);border-left:3px solid #4CAF82;}
+.pen-box.salah{background:rgba(229,115,115,0.08);border-left:3px solid #E57373;}
+.pen-lbl{font-size:10px;font-weight:800;text-transform:uppercase;
+  letter-spacing:0.6px;display:block;margin-bottom:4px;}
 .pen-box.benar .pen-lbl{color:var(--success);}
 .pen-box.salah .pen-lbl{color:var(--danger);}
 
-/* SUBMIT */
+/* Submit */
 .submit-section{margin-top:8px;}
-.prog-info{display:flex;justify-content:space-between;font-size:12px;color:var(--ink3);font-weight:500;margin-bottom:6px;}
-.prog-track{height:5px;background:var(--border);border-radius:3px;overflow:hidden;margin-bottom:12px;}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--c0),var(--c2));border-radius:3px;transition:width 0.35s cubic-bezier(.4,0,.2,1);}
-.btn-submit{width:100%;padding:16px;background:linear-gradient(135deg,var(--c0),var(--c1));color:#fff;border:none;border-radius:var(--r-sm);font-family:'Sora',sans-serif;font-size:15px;font-weight:700;cursor:pointer;transition:all 0.2s;box-shadow:0 4px 20px rgba(9,99,126,0.35);display:flex;align-items:center;justify-content:center;gap:8px;}
-.btn-submit:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 28px rgba(9,99,126,0.45);}
-.btn-submit:disabled{opacity:0.4;cursor:not-allowed;transform:none;box-shadow:none;}
+.prog-row{display:flex;justify-content:space-between;
+  font-size:11px;color:var(--ink3);font-weight:600;margin-bottom:5px;}
+.prog-track{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:12px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--c0),var(--c2));
+  border-radius:2px;transition:width 0.3s ease;}
+.btn-submit{width:100%;padding:15px;
+  background:linear-gradient(135deg,var(--c0),var(--c1));
+  color:#fff;border:none;border-radius:var(--r-sm);
+  font-family:var(--font);font-size:14px;font-weight:800;
+  cursor:pointer;transition:all 0.18s;letter-spacing:0.2px;
+  box-shadow:0 4px 18px rgba(9,99,126,0.30);
+  display:flex;align-items:center;justify-content:center;gap:8px;}
+.btn-submit:hover:not(:disabled){transform:translateY(-1px);box-shadow:0 6px 24px rgba(9,99,126,0.40);}
+.btn-submit:disabled{opacity:0.38;cursor:not-allowed;transform:none;box-shadow:none;}
 
-/* SKOR FINAL */
-#skor-panel{display:none;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:48px 32px;text-align:center;box-shadow:var(--shadow-lg);margin-bottom:32px;animation:fadeUp 0.5s ease both;}
-.skor-ring{width:130px;height:130px;border-radius:50%;background:linear-gradient(135deg,var(--c0),var(--c1));display:flex;flex-direction:column;align-items:center;justify-content:center;margin:0 auto 24px;box-shadow:0 8px 32px rgba(9,99,126,0.35);}
-.skor-ring .snum{font-family:'Instrument Serif',serif;font-size:46px;color:#fff;line-height:1;}
-.skor-ring .sden{font-size:13px;color:rgba(255,255,255,0.7);margin-top:2px;}
-.skor-hl{font-family:'Instrument Serif',serif;font-size:28px;color:var(--ink);margin-bottom:6px;}
-.skor-ds{font-size:14px;color:var(--ink3);}
-.skor-pct{display:inline-block;background:var(--c3);color:var(--c0);font-weight:700;font-size:20px;padding:6px 20px;border-radius:10px;margin:16px 0 0;}
+/* Skor panel */
+#skor-panel{display:none;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:44px 28px;text-align:center;
+  box-shadow:var(--shadow-lg);margin-bottom:28px;}
+.skor-ring{width:120px;height:120px;border-radius:50%;
+  background:linear-gradient(135deg,var(--c0),var(--c1));
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  margin:0 auto 20px;box-shadow:0 6px 28px rgba(9,99,126,0.30);}
+.skor-ring .snum{font-size:42px;font-weight:800;color:#fff;line-height:1;letter-spacing:-1px;}
+.skor-ring .sden{font-size:12px;color:rgba(255,255,255,0.65);margin-top:1px;}
+.skor-hl{font-size:24px;font-weight:800;color:var(--ink);margin-bottom:5px;letter-spacing:-0.3px;}
+.skor-ds{font-size:13px;color:var(--ink3);}
+.skor-pct{display:inline-block;background:var(--c3);color:var(--c0);
+  font-weight:800;font-size:18px;padding:6px 18px;border-radius:8px;margin:14px 0 0;}
 
-/* ── STATISTIK SCREEN ─────────────────────────────────── */
-#screen-stats{max-width:860px;margin:0 auto;padding:48px 24px 100px;}
-.stats-header{background:linear-gradient(135deg,var(--c0),var(--c1));border-radius:var(--r);padding:28px 32px;margin-bottom:28px;color:#fff;display:flex;align-items:center;gap:20px;}
-.stats-avatar{width:64px;height:64px;border-radius:50%;border:3px solid rgba(255,255,255,0.3);object-fit:cover;background:var(--c2);display:flex;align-items:center;justify-content:center;font-size:24px;font-weight:700;color:var(--c4);flex-shrink:0;overflow:hidden;}
+/* ── STATISTIK ──────────────────────────────── */
+#screen-stats{max-width:820px;margin:0 auto;padding:40px 20px 100px;}
+.stats-header{background:linear-gradient(135deg,var(--c0),var(--c1));
+  border-radius:var(--r);padding:24px 28px;margin-bottom:24px;
+  color:#fff;display:flex;align-items:center;gap:18px;}
+.stats-avatar{width:58px;height:58px;border-radius:50%;
+  border:2.5px solid rgba(255,255,255,0.3);
+  background:var(--c2);display:flex;align-items:center;justify-content:center;
+  font-size:22px;font-weight:800;color:var(--c4);flex-shrink:0;overflow:hidden;}
 .stats-avatar img{width:100%;height:100%;object-fit:cover;}
-.stats-header-info .slbl{font-size:12px;opacity:0.7;text-transform:uppercase;letter-spacing:0.8px;}
-.stats-header-info .sname{font-family:'Instrument Serif',serif;font-size:24px;margin-top:2px;}
-.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px;}
-.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;box-shadow:var(--shadow);text-align:center;}
-.stat-card .sc-val{font-family:'Instrument Serif',serif;font-size:32px;color:var(--c0);line-height:1;}
-.stat-card .sc-lbl{font-size:12px;color:var(--ink3);margin-top:4px;font-weight:500;}
-.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);margin-bottom:20px;}
-.chart-card h3{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:20px;display:flex;align-items:center;gap:8px;}
-.chart-card h3 span{font-size:18px;}
-.no-data{text-align:center;padding:40px;color:var(--ink3);font-size:14px;}
+.sh-lbl{font-size:10px;opacity:0.65;text-transform:uppercase;letter-spacing:1px;}
+.sh-name{font-size:20px;font-weight:800;margin-top:2px;letter-spacing:-0.2px;}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.stat-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:18px 20px;box-shadow:var(--shadow);text-align:center;}
+.stat-card .sc-val{font-size:28px;font-weight:800;color:var(--c0);line-height:1;letter-spacing:-0.5px;}
+.stat-card .sc-lbl{font-size:11px;color:var(--ink3);margin-top:4px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
+.chart-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow);margin-bottom:16px;}
+.chart-card h3{font-size:14px;font-weight:800;color:var(--ink);
+  margin-bottom:18px;text-transform:uppercase;letter-spacing:0.5px;}
+.no-data{text-align:center;padding:36px;color:var(--ink3);font-size:13px;}
 
-/* PROFIL SCREEN */
-#screen-profil{max-width:480px;margin:0 auto;padding:48px 24px 100px;}
-.profil-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden;}
-.profil-banner{height:100px;background:linear-gradient(135deg,var(--c0),var(--c1));}
-.profil-body{padding:0 32px 32px;}
-.profil-avatar-wrap{display:flex;justify-content:center;margin-top:-50px;margin-bottom:16px;position:relative;}
-.profil-avatar{width:100px;height:100px;border-radius:50%;border:4px solid #fff;object-fit:cover;background:var(--c2);display:flex;align-items:center;justify-content:center;font-size:36px;font-weight:700;color:var(--c4);overflow:hidden;box-shadow:var(--shadow);}
+/* ── PROFIL ─────────────────────────────────── */
+#screen-profil{max-width:440px;margin:0 auto;padding:40px 20px 100px;}
+.profil-card{background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--r);box-shadow:var(--shadow-lg);overflow:hidden;}
+.profil-banner{height:88px;background:linear-gradient(135deg,var(--c0),var(--c1));}
+.profil-body{padding:0 28px 28px;}
+.profil-avatar-wrap{display:flex;justify-content:center;margin-top:-46px;margin-bottom:14px;position:relative;}
+.profil-avatar{width:92px;height:92px;border-radius:50%;
+  border:3.5px solid #fff;object-fit:cover;
+  background:var(--c2);display:flex;align-items:center;justify-content:center;
+  font-size:32px;font-weight:800;color:var(--c4);overflow:hidden;
+  box-shadow:var(--shadow);}
 .profil-avatar img{width:100%;height:100%;object-fit:cover;}
-.change-photo-btn{position:absolute;bottom:4px;right:calc(50% - 54px);background:var(--c1);border:2px solid #fff;border-radius:50%;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;transition:background 0.2s;}
+.change-photo-btn{position:absolute;bottom:4px;right:calc(50% - 50px);
+  background:var(--c1);border:2.5px solid #fff;border-radius:50%;
+  width:26px;height:26px;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;font-size:12px;transition:background 0.18s;}
 .change-photo-btn:hover{background:var(--c0);}
 #photo-input{display:none;}
-.profil-name{text-align:center;font-family:'Instrument Serif',serif;font-size:22px;color:var(--ink);margin-bottom:4px;}
-.profil-id{text-align:center;font-size:13px;color:var(--ink3);margin-bottom:24px;}
-.profil-info-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);font-size:14px;}
-.profil-info-row:last-child{border-bottom:none;}
-.profil-info-row .pil{color:var(--ink3);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;}
-.profil-info-row .piv{color:var(--ink);font-weight:600;}
-.btn-logout{width:100%;margin-top:24px;padding:12px;background:transparent;border:1.5px solid var(--border);border-radius:var(--r-sm);font-family:'Sora',sans-serif;font-size:14px;font-weight:600;color:var(--ink2);cursor:pointer;transition:all 0.2s;}
+.profil-name{text-align:center;font-size:20px;font-weight:800;
+  color:var(--ink);margin-bottom:3px;letter-spacing:-0.2px;}
+.profil-id-txt{text-align:center;font-size:12px;color:var(--ink3);margin-bottom:22px;font-weight:600;}
+.profil-info-row{display:flex;justify-content:space-between;align-items:center;
+  padding:11px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.profil-info-row:last-of-type{border-bottom:none;}
+.pil{color:var(--ink3);font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;}
+.piv{color:var(--ink);font-weight:700;}
+.btn-logout{width:100%;margin-top:20px;padding:11px;
+  background:transparent;border:1.5px solid var(--border);border-radius:var(--r-sm);
+  font-family:var(--font);font-size:13px;font-weight:700;
+  color:var(--ink3);cursor:pointer;transition:all 0.18s;letter-spacing:0.2px;}
 .btn-logout:hover{border-color:var(--danger);color:var(--danger);}
 
-/* FOOTER */
-footer{position:fixed;bottom:0;left:0;right:0;background:rgba(235,244,246,0.94);backdrop-filter:blur(10px);border-top:1px solid var(--border);padding:10px 40px;display:flex;align-items:center;justify-content:flex-end;z-index:100;}
-.copy{font-size:11.5px;color:var(--ink3);}
-.copy strong{color:var(--c0);font-weight:600;}
+/* FOOTER desktop */
+footer{position:fixed;bottom:0;left:0;right:0;
+  background:rgba(235,244,246,0.95);backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+  padding:9px 32px;display:flex;align-items:center;justify-content:flex-end;z-index:100;}
+.copy{font-size:11px;color:var(--ink3);}
+.copy strong{color:var(--c0);font-weight:700;}
+
+/* BOTTOM NAV mobile */
+.bottom-nav{display:none;}
 
 /* TOAST */
-#toast{position:fixed;bottom:56px;left:50%;transform:translateX(-50%) translateY(10px);background:var(--ink);color:#fff;padding:12px 22px;border-radius:10px;font-size:13.5px;font-weight:500;opacity:0;transition:all 0.3s;pointer-events:none;z-index:999;white-space:nowrap;box-shadow:0 4px 20px rgba(0,0,0,0.2);}
+#toast{position:fixed;bottom:60px;left:50%;
+  transform:translateX(-50%) translateY(8px);
+  background:var(--ink);color:#fff;padding:10px 20px;border-radius:8px;
+  font-size:13px;font-weight:600;opacity:0;transition:all 0.25s;
+  pointer-events:none;z-index:999;white-space:nowrap;
+  box-shadow:0 4px 18px rgba(0,0,0,0.18);}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
 
-/* BOTTOM NAV - mobile only */
-.bottom-nav{display:none;}
+/* ── MOBILE ─────────────────────────────────── */
 @media(max-width:600px){
-  header{padding:0 14px;height:56px;}
-  .logo-text span{display:none;}
-  .hdr-copy{display:none;}
-  /* Hide nav tabs from header on mobile */
+  header{padding:0 16px;height:54px;}
+  .logo-sub,.hdr-copy{display:none;}
   #nav-tabs{display:none!important;}
-  /* Hide name from user pill, show only avatar */
   #uname-display{display:none;}
-  #user-pill{padding:2px;border:none;background:none;gap:0;}
+  #user-pill{padding:2px;border:none;background:none;}
 
-  #screen-login,#screen-profil{padding:24px 16px 90px;}
+  #screen-login{padding:28px 16px 90px;}
+  #screen-profil{padding:28px 16px 90px;}
   main,#screen-stats{padding:24px 14px 90px;}
   .login-card{padding:24px 18px;}
-  .hero-title{font-size:30px;}
-  .top-bar{flex-direction:column;align-items:flex-start;gap:8px;padding:16px 18px;}
+  .login-title{font-size:28px;}
+  .top-bar{flex-direction:column;align-items:flex-start;gap:10px;padding:18px 18px;}
   .stats-grid{grid-template-columns:repeat(2,1fr);}
   footer{display:none;}
+  #toast{bottom:76px;}
 
-  /* Bottom nav visible on mobile */
+  /* Bottom nav */
   .bottom-nav{
-    display:flex;
-    position:fixed;bottom:0;left:0;right:0;
-    background:rgba(255,255,255,0.97);
-    backdrop-filter:blur(16px);
-    border-top:1px solid var(--border);
-    z-index:300;
-    padding:8px 0 max(8px, env(safe-area-inset-bottom));
-  }
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    background:rgba(255,255,255,0.97);backdrop-filter:blur(18px);
+    border-top:1px solid var(--border);z-index:300;
+    padding:6px 0 max(6px,env(safe-area-inset-bottom));}
   .bottom-nav-item{
     flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;
-    padding:4px 8px;cursor:pointer;border:none;background:none;
-    font-family:'DM Sans',sans-serif;font-size:10px;font-weight:600;
-    color:var(--ink3);transition:color 0.2s;
-  }
+    padding:4px 6px;cursor:pointer;border:none;background:none;
+    font-family:var(--font);font-size:10px;font-weight:700;
+    color:var(--ink3);transition:color 0.18s;letter-spacing:0.3px;text-transform:uppercase;}
   .bottom-nav-item.active{color:var(--c0);}
-  .bottom-nav-item .bni-icon{font-size:20px;line-height:1;}
-  #toast{bottom:80px;}
+  .bni-dot{width:20px;height:3px;border-radius:2px;background:transparent;transition:background 0.18s;margin-bottom:1px;}
+  .bottom-nav-item.active .bni-dot{background:var(--c1);}
+  .bni-label{font-size:9.5px;}
 }
 </style>
 </head>
@@ -253,14 +376,14 @@ footer{position:fixed;bottom:0;left:0;right:0;background:rgba(235,244,246,0.94);
 <!-- HEADER -->
 <header>
   <div class="logo-wrap">
-    <div class="logo-icon">🔬</div>
-    <div class="logo-text"><strong>OSN IPA</strong><span>LATIHAN HARIAN</span></div>
+    <div class="logo-dot"></div>
+    <span class="logo-text">OSN IPA<span class="logo-sub"> &nbsp;Latihan Harian</span></span>
   </div>
   <div class="header-right">
     <nav class="nav-tabs" id="nav-tabs">
-      <button class="nav-tab active" onclick="goTab('soal')">📝 Latihan</button>
-      <button class="nav-tab" onclick="goTab('stats')">📊 Statistik</button>
-      <button class="nav-tab" onclick="goTab('profil')">👤 Profil</button>
+      <button class="nav-tab active" onclick="goTab('soal')">Latihan</button>
+      <button class="nav-tab" onclick="goTab('stats')">Statistik</button>
+      <button class="nav-tab" onclick="goTab('profil')">Profil</button>
     </nav>
     <div id="user-pill" onclick="goTab('profil')">
       <div class="avatar-sm" id="header-avatar"><span id="header-initial"></span></div>
@@ -270,73 +393,82 @@ footer{position:fixed;bottom:0;left:0;right:0;background:rgba(235,244,246,0.94);
   </div>
 </header>
 
-<!-- BOTTOM NAV (mobile only) -->
+<!-- BOTTOM NAV mobile -->
 <nav class="bottom-nav" id="bottom-nav" style="display:none;">
   <button class="bottom-nav-item active" id="bn-soal" onclick="goTab('soal')">
-    <span class="bni-icon">📝</span>Latihan
+    <div class="bni-dot"></div>
+    <span class="bni-label">Latihan</span>
   </button>
   <button class="bottom-nav-item" id="bn-stats" onclick="goTab('stats')">
-    <span class="bni-icon">📊</span>Statistik
+    <div class="bni-dot"></div>
+    <span class="bni-label">Statistik</span>
   </button>
   <button class="bottom-nav-item" id="bn-profil" onclick="goTab('profil')">
-    <span class="bni-icon">👤</span>Profil
+    <div class="bni-dot"></div>
+    <span class="bni-label">Profil</span>
   </button>
 </nav>
 
-<!-- LOGIN SCREEN -->
+<!-- LOGIN -->
 <div id="screen-login" class="screen active">
   <div class="login-hero">
-    <div class="hero-badge">🏆 Persiapan OSN IPA</div>
-    <h1 class="hero-title">Latihan <em>Cerdas</em>,<br>Raih Prestasi.</h1>
-    <p class="hero-sub">Platform latihan soal harian berbasis bacaan<br>untuk para calon peserta OSN IPA.</p>
+    <div class="login-badge">Persiapan OSN IPA</div>
+    <h1 class="login-title">Latihan <em>Cerdas</em>,<br>Raih Prestasi.</h1>
+    <p class="login-sub">Platform latihan soal harian berbasis bacaan<br>untuk para calon peserta OSN IPA.</p>
   </div>
   <div class="login-card">
     <h2>Masuk ke Akun</h2>
     <p class="sub">Gunakan ID dan password yang telah diberikan</p>
-    <div class="err-box" id="err-box"><span>⚠️</span><span id="err-txt">ID atau password salah.</span></div>
-    <div class="field">
-      <label>ID Peserta</label>
-      <div class="input-wrap">
-        <span class="ico">🪪</span>
-        <input type="text" id="inp-id" placeholder="Contoh: YJS001" autocomplete="off"/>
-      </div>
+    <div class="err-box" id="err-box">
+      <span id="err-txt">ID atau password salah.</span>
     </div>
     <div class="field">
-      <label>Password</label>
-      <div class="input-wrap">
-        <span class="ico">🔒</span>
-        <input type="password" id="inp-pw" placeholder="6 digit password" maxlength="6"/>
-        <button class="show-pw" onclick="togglePw()" type="button">👁</button>
-      </div>
-    </div>
-    <button class="btn-login" onclick="doLogin()">Masuk ke Latihan →</button>
+  <label>ID Peserta</label>
+  <div class="input-wrap">
+    <span class="input-ico">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    </span>
+    <input type="text" id="inp-id" placeholder="Contoh: YJS001" autocomplete="off"/>
   </div>
 </div>
-
-<!-- SOAL SCREEN -->
+<div class="field">
+  <label>Password</label>
+  <div class="input-wrap">
+    <span class="input-ico">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </span>
+    <input type="password" id="inp-pw" placeholder="6 digit password" maxlength="6"/>
+    <button class="show-pw" onclick="togglePw()" type="button">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+    </button>
+  </div>
+</div>
+<!-- SOAL -->
 <main id="screen-main" class="screen">
   <div class="top-bar">
-    <div class="top-bar-left">
-      <div class="greet">Halo,</div>
-      <div class="uname" id="display-name">—</div>
+    <div class="tb-left">
+      <div class="tb-greet">Halo,</div>
+      <div class="tb-name" id="display-name">—</div>
     </div>
-    <div class="top-bar-right">
-      <div class="dlbl">Latihan Hari Ini</div>
-      <div class="dval" id="display-date">—</div>
-      <div><span class="soal-badge" id="display-count">— soal</span></div>
+    <div class="tb-right">
+      <div class="tb-lbl">Latihan Hari Ini</div>
+      <div class="tb-date" id="display-date">—</div>
+      <div><span class="tb-badge" id="display-count">— soal</span></div>
     </div>
   </div>
 
-  <!-- Already submitted banner -->
   <div id="submitted-banner">
-    <div class="sb-icon">✅</div>
-    <h3>Latihan Hari Ini Sudah Selesai!</h3>
-    <p>Kamu sudah mengumpulkan jawaban hari ini. Pantau perkembanganmu di halaman Statistik.</p>
-    <div class="sb-score" id="sb-score-display"></div>
+    <div class="sb-title">Latihan Hari Ini Sudah Selesai</div>
+    <div class="sb-desc">Kamu sudah mengumpulkan jawaban hari ini. Pantau perkembanganmu di halaman Statistik.</div>
+    <div class="sb-score-pill" id="sb-score-display"></div>
   </div>
 
   <div id="loading"><div class="spinner"></div><p>Memuat soal untuk hari ini...</p></div>
-  <div id="empty"><div class="ico">📭</div><h3>Belum Ada Soal</h3><p>Soal untuk hari ini belum tersedia.<br>Cek kembali nanti ya!</p></div>
+  <div id="empty">
+    <div class="e-icon">—</div>
+    <h3>Belum Ada Soal</h3>
+    <p>Soal untuk hari ini belum tersedia.<br>Cek kembali nanti ya.</p>
+  </div>
   <div id="soal-container"></div>
 
   <div id="skor-panel">
@@ -350,91 +482,63 @@ footer{position:fixed;bottom:0;left:0;right:0;background:rgba(235,244,246,0.94);
   </div>
 
   <div class="submit-section" id="submit-section">
-    <div class="prog-info">
+    <div class="prog-row">
       <span id="prog-txt">0 dari 0 soal dijawab</span>
       <span id="prog-pct">0%</span>
     </div>
     <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
-    <button class="btn-submit" id="btn-submit" onclick="submitJawaban()" disabled>✅ Kumpulkan Jawaban</button>
+    <button class="btn-submit" id="btn-submit" onclick="submitJawaban()" disabled>Kumpulkan Jawaban</button>
   </div>
 </main>
 
-<!-- STATISTIK SCREEN -->
+<!-- STATISTIK -->
 <div id="screen-stats" class="screen">
   <div class="stats-header">
     <div class="stats-avatar" id="stats-avatar"><span id="stats-initial"></span></div>
-    <div class="stats-header-info">
-      <div class="slbl">Statistik Latihan</div>
-      <div class="sname" id="stats-name">—</div>
+    <div>
+      <div class="sh-lbl">Statistik Latihan</div>
+      <div class="sh-name" id="stats-name">—</div>
     </div>
   </div>
-
   <div class="stats-grid">
-    <div class="stat-card">
-      <div class="sc-val" id="stat-total-latihan">—</div>
-      <div class="sc-lbl">Total Latihan</div>
-    </div>
-    <div class="stat-card">
-      <div class="sc-val" id="stat-rata-rata">—</div>
-      <div class="sc-lbl">Rata-rata Skor</div>
-    </div>
-    <div class="stat-card">
-      <div class="sc-val" id="stat-terbaik">—</div>
-      <div class="sc-lbl">Skor Terbaik</div>
-    </div>
+    <div class="stat-card"><div class="sc-val" id="stat-total-latihan">—</div><div class="sc-lbl">Total Latihan</div></div>
+    <div class="stat-card"><div class="sc-val" id="stat-rata-rata">—</div><div class="sc-lbl">Rata-rata</div></div>
+    <div class="stat-card"><div class="sc-val" id="stat-terbaik">—</div><div class="sc-lbl">Terbaik</div></div>
   </div>
-
   <div class="chart-card">
-    <h3><span>📈</span> Perkembangan Skor Harian</h3>
-    <div id="chart-line-wrap" style="position:relative;height:220px;">
-      <canvas id="chart-line"></canvas>
-    </div>
+    <h3>Perkembangan Skor Harian</h3>
+    <div style="position:relative;height:200px;" id="chart-line-wrap"><canvas id="chart-line"></canvas></div>
     <div class="no-data" id="no-data-line" style="display:none;">Belum ada data latihan.</div>
   </div>
-
   <div class="chart-card">
-    <h3><span>📊</span> Perbandingan Skor per Topik</h3>
-    <div id="chart-bar-wrap" style="position:relative;height:220px;">
-      <canvas id="chart-bar"></canvas>
-    </div>
+    <h3>Skor per Tanggal</h3>
+    <div style="position:relative;height:200px;" id="chart-bar-wrap"><canvas id="chart-bar"></canvas></div>
     <div class="no-data" id="no-data-bar" style="display:none;">Belum ada data latihan.</div>
   </div>
 </div>
 
-<!-- PROFIL SCREEN -->
+<!-- PROFIL -->
 <div id="screen-profil" class="screen">
   <div class="profil-card">
     <div class="profil-banner"></div>
     <div class="profil-body">
       <div class="profil-avatar-wrap">
         <div class="profil-avatar" id="profil-avatar"><span id="profil-initial"></span></div>
-        <label class="change-photo-btn" for="photo-input" title="Ganti foto">📷</label>
+        <label class="change-photo-btn" for="photo-input" title="Ganti foto">+</label>
         <input type="file" id="photo-input" accept="image/*" onchange="handlePhotoUpload(event)"/>
       </div>
       <div class="profil-name" id="profil-name">—</div>
-      <div class="profil-id" id="profil-id-display">—</div>
-      <div class="profil-info-row">
-        <span class="pil">ID Peserta</span>
-        <span class="piv" id="pi-id">—</span>
-      </div>
-      <div class="profil-info-row">
-        <span class="pil">Total Latihan</span>
-        <span class="piv" id="pi-latihan">— hari</span>
-      </div>
-      <div class="profil-info-row">
-        <span class="pil">Rata-rata Skor</span>
-        <span class="piv" id="pi-rata">—%</span>
-      </div>
-      <div class="profil-info-row">
-        <span class="pil">Skor Terbaik</span>
-        <span class="piv" id="pi-terbaik">—%</span>
-      </div>
+      <div class="profil-id-txt" id="profil-id-display">—</div>
+      <div class="profil-info-row"><span class="pil">ID Peserta</span><span class="piv" id="pi-id">—</span></div>
+      <div class="profil-info-row"><span class="pil">Total Latihan</span><span class="piv" id="pi-latihan">—</span></div>
+      <div class="profil-info-row"><span class="pil">Rata-rata Skor</span><span class="piv" id="pi-rata">—</span></div>
+      <div class="profil-info-row"><span class="pil">Skor Terbaik</span><span class="piv" id="pi-terbaik">—</span></div>
       <button class="btn-logout" onclick="doLogout()">Keluar dari Akun</button>
     </div>
   </div>
 </div>
 
-</div><!-- /.page -->
+</div>
 <footer><div class="copy">© 2025 <strong>M. Hasanul Fatta</strong> — All rights reserved</div></footer>
 <div id="toast"></div>
 
@@ -452,7 +556,6 @@ const USERS = {
 let state={ user:null, tanggal:"", soalData:[], bacaanData:[], jawaban:{}, submitted:false };
 let chartLine=null, chartBar=null;
 
-// ── INIT ──────────────────────────────────────────────────────
 document.addEventListener("DOMContentLoaded",()=>{
   document.getElementById("inp-pw").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
   document.getElementById("inp-id").addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("inp-pw").focus(); });
@@ -491,7 +594,6 @@ function doLogin(){
   const today=new Date();
   state.tanggal=today.toLocaleDateString("sv-SE",{timeZone:"Asia/Jakarta"});
 
-  // Update UI
   document.getElementById("screen-login").classList.remove("active");
   document.getElementById("screen-main").classList.add("active");
   document.getElementById("display-name").textContent=user.nama.split(" ")[0];
@@ -501,11 +603,8 @@ function doLogin(){
   document.getElementById("nav-tabs").style.display="flex";
   document.getElementById("bottom-nav").style.display="flex";
 
-  // Load saved photo
   const savedPhoto=localStorage.getItem(`photo_${id}`);
-  if(savedPhoto){
-    setAvatarPhoto(savedPhoto);
-  }
+  if(savedPhoto) setAvatarPhoto(savedPhoto);
 
   document.getElementById("display-date").textContent=
     today.toLocaleDateString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
@@ -513,34 +612,27 @@ function doLogin(){
   loadSoal();
 }
 
-// ── PHOTO ──────────────────────────────────────────────────────
+// ── PHOTO ─────────────────────────────────────────────────────
 function handlePhotoUpload(e){
   const file=e.target.files[0]; if(!file) return;
   const reader=new FileReader();
   reader.onload=ev=>{
     const b64=ev.target.result;
-    localStorage.setItem(`photo_${state.user.id}`, b64);
+    localStorage.setItem(`photo_${state.user.id}`,b64);
     setAvatarPhoto(b64);
-    showToast("✅ Foto profil berhasil diperbarui!");
+    showToast("Foto profil berhasil diperbarui");
   };
   reader.readAsDataURL(file);
 }
 
 function setAvatarPhoto(src){
-  // Header avatar
-  const ha=document.getElementById("header-avatar");
-  ha.innerHTML=`<img src="${src}" alt="foto"/>`;
-  // Stats avatar
-  const sa=document.getElementById("stats-avatar");
-  sa.innerHTML=`<img src="${src}" alt="foto"/>`;
-  // Profil avatar
-  const pa=document.getElementById("profil-avatar");
-  pa.innerHTML=`<img src="${src}" alt="foto"/>`;
+  document.getElementById("header-avatar").innerHTML=`<img src="${src}" alt="foto"/>`;
+  document.getElementById("stats-avatar").innerHTML=`<img src="${src}" alt="foto"/>`;
+  document.getElementById("profil-avatar").innerHTML=`<img src="${src}" alt="foto"/>`;
 }
 
 // ── LOAD SOAL ─────────────────────────────────────────────────
 async function loadSoal(){
-  // Check if already submitted today
   const submitKey=`submitted_${state.user.id}_${state.tanggal}`;
   const savedSubmit=localStorage.getItem(submitKey);
 
@@ -560,16 +652,15 @@ async function loadSoal(){
 
     state.soalData=data.soal; state.bacaanData=data.bacaan||[];
     state.jawaban={}; state.submitted=false;
-    document.getElementById("display-count").textContent=`📝 ${data.soal.length} soal`;
+    document.getElementById("display-count").textContent=`${data.soal.length} soal`;
 
-    // If already submitted, show banner and readonly soal
     if(savedSubmit){
-      const submitData=JSON.parse(savedSubmit);
+      const sd=JSON.parse(savedSubmit);
       document.getElementById("submitted-banner").style.display="block";
-      document.getElementById("sb-score-display").textContent=`Skor: ${submitData.skor} (${submitData.pct}%)`;
-      renderSoal(); // render tapi disabled
+      document.getElementById("sb-score-display").textContent=`Skor: ${sd.skor} (${sd.pct}%)`;
+      renderSoal();
       disableAllInputs();
-      showHasilFromStorage(submitData.jawaban);
+      showHasilFromStorage(sd.jawaban);
     } else {
       renderSoal();
       document.getElementById("submit-section").style.display="block";
@@ -577,7 +668,7 @@ async function loadSoal(){
     }
   } catch(e){
     document.getElementById("loading").style.display="none";
-    showToast("❌ Gagal memuat soal. Periksa koneksi internet.");
+    showToast("Gagal memuat soal. Periksa koneksi internet.");
   }
 }
 
@@ -588,24 +679,30 @@ function renderSoal(){
   const bacaanMap={};
   state.bacaanData.forEach(b=>bacaanMap[b.bacaan_id]=b);
   const order=[]; const byBacaan={};
-  state.soalData.forEach(s=>{ if(!byBacaan[s.bacaan_id]){ order.push(s.bacaan_id); byBacaan[s.bacaan_id]=[]; } byBacaan[s.bacaan_id].push(s); });
+  state.soalData.forEach(s=>{
+    if(!byBacaan[s.bacaan_id]){ order.push(s.bacaan_id); byBacaan[s.bacaan_id]=[]; }
+    byBacaan[s.bacaan_id].push(s);
+  });
 
   let n=1;
   order.forEach(bid=>{
     const b=bacaanMap[bid];
     if(b&&b.bacaan_teks){
       const bc=document.createElement("div"); bc.className="bacaan-card";
-      bc.innerHTML=`<div class="bacaan-header"><span class="bacaan-tag">📖 Bacaan · ${bid}</span><span class="bacaan-title-txt">${b.bacaan_judul}</span></div><div class="bacaan-body"><div class="bacaan-teks">${b.bacaan_teks}</div></div>`;
+      bc.innerHTML=`<div class="bacaan-header"><span class="bacaan-tag">Bacaan ${bid}</span><span class="bacaan-title-txt">${b.bacaan_judul}</span></div><div class="bacaan-body"><div class="bacaan-teks">${b.bacaan_teks}</div></div>`;
       container.appendChild(bc);
     }
     byBacaan[bid].forEach((s,i)=>{
-      const card=document.createElement("div"); card.className="soal-card"; card.id=`card-${s.soal_id}`; card.style.animationDelay=`${i*40}ms`;
+      const card=document.createElement("div"); card.className="soal-card"; card.id=`card-${s.soal_id}`; card.style.animationDelay=`${i*35}ms`;
       let opsiHTML="";
       if(s.tipe==="PG"){
         const opts=[{k:"A",v:s.opsi_a},{k:"B",v:s.opsi_b},{k:"C",v:s.opsi_c},{k:"D",v:s.opsi_d}].filter(o=>o.v);
         opsiHTML=`<div class="opsi-list">`+opts.map(o=>`<label class="opsi-item" id="opsi-${s.soal_id}-${o.k}"><input type="radio" name="${s.soal_id}" value="${o.k}" onchange="pilih('${s.soal_id}','${o.k}','PG')"/><span class="opsi-key">${o.k}</span><span>${o.v}</span></label>`).join("")+`</div>`;
       } else {
-        opsiHTML=`<div class="bs-list"><label class="bs-item" id="opsi-${s.soal_id}-Benar"><input type="radio" name="${s.soal_id}" value="Benar" onchange="pilih('${s.soal_id}','Benar','BS')"/> ✅ Benar</label><label class="bs-item" id="opsi-${s.soal_id}-Salah"><input type="radio" name="${s.soal_id}" value="Salah" onchange="pilih('${s.soal_id}','Salah','BS')"/> ❌ Salah</label></div>`;
+        opsiHTML=`<div class="bs-list">
+          <label class="bs-item" id="opsi-${s.soal_id}-Benar"><input type="radio" name="${s.soal_id}" value="Benar" onchange="pilih('${s.soal_id}','Benar','BS')"/><div class="bs-dot"></div>Benar</label>
+          <label class="bs-item" id="opsi-${s.soal_id}-Salah"><input type="radio" name="${s.soal_id}" value="Salah" onchange="pilih('${s.soal_id}','Salah','BS')"/><div class="bs-dot"></div>Salah</label>
+        </div>`;
       }
       card.innerHTML=`<div class="soal-meta"><span class="soal-num-badge">Soal ${n++}</span><span class="tipe-badge">${s.tipe==="PG"?"Pilihan Ganda":"Benar / Salah"}</span></div><div class="soal-teks">${s.soal_teks}</div>${opsiHTML}`;
       container.appendChild(card);
@@ -622,10 +719,10 @@ function showHasilFromStorage(jawabanArr){
     const j=map[s.soal_id]; const ok=j&&j.benar_salah==="Benar";
     card.classList.add(ok?"benar":"salah");
     const badge=document.createElement("div"); badge.className="hasil-row";
-    badge.innerHTML=`<span class="hasil-chip ${ok?"benar":"salah"}">${ok?"✅ Benar":"❌ Salah"}</span>`;
+    badge.innerHTML=`<span class="hasil-chip ${ok?"benar":"salah"}">${ok?"Benar":"Salah"}</span>`;
     card.insertBefore(badge,card.firstChild);
-    if(j) { const el=document.getElementById(`opsi-${s.soal_id}-${j.jawaban_siswa}`); if(el) el.classList.add(ok?"correct-ans":"wrong-ans"); }
-    if(s.tipe==="PG"&&s.jawaban_benar!==j?.jawaban_siswa){ const el=document.getElementById(`opsi-${s.soal_id}-${s.jawaban_benar}`); if(el) el.classList.add("correct-ans"); }
+    if(j){ const el=document.getElementById(`opsi-${s.soal_id}-${j.jawaban_siswa}`); if(el) el.classList.add(ok?"correct-ans":"wrong-ans"); }
+    if(s.tipe==="PG"&&!ok){ const el=document.getElementById(`opsi-${s.soal_id}-${s.jawaban_benar}`); if(el) el.classList.add("correct-ans"); }
     const pen=document.createElement("div"); pen.className=`pen-box ${ok?"benar":"salah"}`;
     pen.innerHTML=!ok?`<span class="pen-lbl">Jawaban Benar: ${s.jawaban_benar}</span>${s.penjelasan}`:`<span class="pen-lbl">Penjelasan</span>${s.penjelasan}`;
     card.appendChild(pen);
@@ -654,9 +751,9 @@ function updateProg(){
 // ── SUBMIT ────────────────────────────────────────────────────
 async function submitJawaban(){
   if(state.submitted) return;
-  if(Object.keys(state.jawaban).length<state.soalData.length){ showToast("Masih ada soal yang belum dijawab!"); return; }
+  if(Object.keys(state.jawaban).length<state.soalData.length){ showToast("Masih ada soal yang belum dijawab"); return; }
   state.submitted=true;
-  const btn=document.getElementById("btn-submit"); btn.disabled=true; btn.textContent="⏳ Mengirim...";
+  const btn=document.getElementById("btn-submit"); btn.disabled=true; btn.textContent="Mengirim...";
 
   let benar=0;
   const arr=state.soalData.map(s=>{
@@ -669,15 +766,18 @@ async function submitJawaban(){
   const total=state.soalData.length;
   const pct=Math.round(benar/total*100);
 
-  // Save to localStorage — LIMIT 1x per day
+  // Save submit record
   const submitKey=`submitted_${state.user.id}_${state.tanggal}`;
-  localStorage.setItem(submitKey, JSON.stringify({ skor:`${benar}/${total}`, pct, jawaban:arr, tanggal:state.tanggal }));
+  localStorage.setItem(submitKey,JSON.stringify({ skor:`${benar}/${total}`, pct, jawaban:arr, tanggal:state.tanggal }));
 
-  // Save to history for stats
+  // Save to history — deduplicate by tanggal
   const histKey=`history_${state.user.id}`;
   const hist=JSON.parse(localStorage.getItem(histKey)||"[]");
-  hist.push({ tanggal:state.tanggal, skor:benar, total, pct });
-  localStorage.setItem(histKey, JSON.stringify(hist));
+  const existIdx=hist.findIndex(h=>h.tanggal===state.tanggal);
+  const entry={ tanggal:state.tanggal, skor:benar, total, pct };
+  if(existIdx>=0) hist[existIdx]=entry; else hist.push(entry);
+  hist.sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
+  localStorage.setItem(histKey,JSON.stringify(hist));
 
   tampilHasil(arr);
   document.getElementById("skor-num").textContent=benar;
@@ -691,12 +791,12 @@ async function submitJawaban(){
 
   try{
     await fetch(APPS_SCRIPT_URL,{
-      method:"POST", headers:{"Content-Type":"application/json"},
+      method:"POST",headers:{"Content-Type":"application/json"},
       body:JSON.stringify({ action:"submitJawaban", nama_siswa:state.user.nama, tanggal_latihan:state.tanggal, jawaban:arr, skor_total:`${benar}/${total}` }),
       mode:"no-cors"
     });
-    showToast("✅ Jawaban berhasil dikirim!");
-  } catch(e){ showToast("⚠️ Gagal kirim ke server."); }
+    showToast("Jawaban berhasil dikirim");
+  } catch(e){ showToast("Gagal kirim ke server."); }
 }
 
 function tampilHasil(arr){
@@ -707,7 +807,7 @@ function tampilHasil(arr){
     card.classList.remove("answered"); card.classList.add(ok?"benar":"salah");
     card.querySelectorAll("input").forEach(i=>i.disabled=true);
     const badge=document.createElement("div"); badge.className="hasil-row";
-    badge.innerHTML=`<span class="hasil-chip ${ok?"benar":"salah"}">${ok?"✅ Benar":"❌ Salah"}</span>`;
+    badge.innerHTML=`<span class="hasil-chip ${ok?"benar":"salah"}">${ok?"Benar":"Salah"}</span>`;
     card.insertBefore(badge,card.firstChild);
     if(s.tipe==="PG"){
       ["A","B","C","D"].forEach(k=>{
@@ -727,14 +827,12 @@ function loadStats(){
   if(!state.user) return;
   const id=state.user.id;
 
-  // Avatar
   const savedPhoto=localStorage.getItem(`photo_${id}`);
   const sa=document.getElementById("stats-avatar");
   if(savedPhoto) sa.innerHTML=`<img src="${savedPhoto}" alt="foto"/>`;
-  else { sa.innerHTML=""; document.getElementById("stats-initial").textContent=state.user.nama.charAt(0); }
+  else{ sa.innerHTML=""; document.getElementById("stats-initial").textContent=state.user.nama.charAt(0); }
   document.getElementById("stats-name").textContent=state.user.nama;
 
-  // History from localStorage
   const hist=JSON.parse(localStorage.getItem(`history_${id}`)||"[]");
 
   if(!hist.length){
@@ -754,79 +852,36 @@ function loadStats(){
   document.getElementById("chart-bar-wrap").style.display="block";
 
   const total=hist.length;
-  const rataRata=Math.round(hist.reduce((s,h)=>s+h.pct,0)/total);
+  const rata=Math.round(hist.reduce((s,h)=>s+h.pct,0)/total);
   const terbaik=Math.max(...hist.map(h=>h.pct));
 
   document.getElementById("stat-total-latihan").textContent=total;
-  document.getElementById("stat-rata-rata").textContent=rataRata+"%";
+  document.getElementById("stat-rata-rata").textContent=rata+"%";
   document.getElementById("stat-terbaik").textContent=terbaik+"%";
 
-  // Update profil sidebar stats too
-  document.getElementById("pi-latihan").textContent=total+" hari";
-  document.getElementById("pi-rata").textContent=rataRata+"%";
-  document.getElementById("pi-terbaik").textContent=terbaik+"%";
-
-  // Line chart — skor harian
-  const labels=hist.map(h=>{ const d=new Date(h.tanggal); return d.toLocaleDateString("id-ID",{day:"numeric",month:"short"}); });
-  const skorPct=hist.map(h=>h.pct);
+  const labels=hist.map(h=>{
+    const d=new Date(h.tanggal+"T00:00:00");
+    return d.toLocaleDateString("id-ID",{day:"numeric",month:"short"});
+  });
+  const vals=hist.map(h=>h.pct);
 
   if(chartLine) chartLine.destroy();
-  const ctxL=document.getElementById("chart-line").getContext("2d");
-  chartLine=new Chart(ctxL,{
+  chartLine=new Chart(document.getElementById("chart-line").getContext("2d"),{
     type:"line",
-    data:{
-      labels,
-      datasets:[{
-        label:"Skor (%)",
-        data:skorPct,
-        borderColor:"#088395",
-        backgroundColor:"rgba(8,131,149,0.08)",
-        borderWidth:2.5,
-        pointBackgroundColor:"#09637E",
-        pointRadius:5,
-        pointHoverRadius:7,
-        tension:0.35,
-        fill:true,
-      }]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:ctx=>`Skor: ${ctx.raw}%` } } },
-      scales:{
-        y:{ min:0, max:100, ticks:{ callback:v=>v+"%" }, grid:{ color:"rgba(0,0,0,0.05)" } },
-        x:{ grid:{ display:false } }
-      }
+    data:{ labels, datasets:[{ data:vals, borderColor:"#088395", backgroundColor:"rgba(8,131,149,0.07)", borderWidth:2, pointBackgroundColor:"#09637E", pointRadius:4, pointHoverRadius:6, tension:0.4, fill:true }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:c=>`Skor: ${c.raw}%` } } },
+      scales:{ y:{ min:0, max:100, ticks:{ callback:v=>v+"%", font:{ family:"Nunito", size:11 } }, grid:{ color:"rgba(0,0,0,0.04)" } }, x:{ grid:{ display:false }, ticks:{ font:{ family:"Nunito", size:11 } } } }
     }
   });
 
-  // Bar chart — per topik (ambil dari soalData jika ada, fallback ke rata-rata)
-  // Group by tanggal sebagai proxy topik
-  const topikMap={};
-  hist.forEach(h=>{ const key=h.tanggal; topikMap[key]=(topikMap[key]||[]); topikMap[key].push(h.pct); });
-  const barLabels=Object.keys(topikMap).map(t=>{ const d=new Date(t); return d.toLocaleDateString("id-ID",{day:"numeric",month:"short"}); });
-  const barData=Object.values(topikMap).map(arr=>Math.round(arr.reduce((s,v)=>s+v,0)/arr.length));
-
   if(chartBar) chartBar.destroy();
-  const ctxB=document.getElementById("chart-bar").getContext("2d");
-  chartBar=new Chart(ctxB,{
+  chartBar=new Chart(document.getElementById("chart-bar").getContext("2d"),{
     type:"bar",
-    data:{
-      labels:barLabels,
-      datasets:[{
-        label:"Skor (%)",
-        data:barData,
-        backgroundColor:barData.map(v=>v>=80?"rgba(8,131,149,0.8)":v>=60?"rgba(122,178,178,0.8)":"rgba(192,57,43,0.6)"),
-        borderRadius:8,
-        borderSkipped:false,
-      }]
-    },
-    options:{
-      responsive:true, maintainAspectRatio:false,
-      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:ctx=>`Skor: ${ctx.raw}%` } } },
-      scales:{
-        y:{ min:0, max:100, ticks:{ callback:v=>v+"%" }, grid:{ color:"rgba(0,0,0,0.05)" } },
-        x:{ grid:{ display:false } }
-      }
+    data:{ labels, datasets:[{ data:vals, backgroundColor:vals.map(v=>v>=80?"rgba(8,131,149,0.75)":v>=60?"rgba(122,178,178,0.75)":"rgba(192,57,43,0.55)"), borderRadius:6, borderSkipped:false }] },
+    options:{ responsive:true, maintainAspectRatio:false,
+      plugins:{ legend:{ display:false }, tooltip:{ callbacks:{ label:c=>`Skor: ${c.raw}%` } } },
+      scales:{ y:{ min:0, max:100, ticks:{ callback:v=>v+"%", font:{ family:"Nunito", size:11 } }, grid:{ color:"rgba(0,0,0,0.04)" } }, x:{ grid:{ display:false }, ticks:{ font:{ family:"Nunito", size:11 } } } }
     }
   });
 }
@@ -839,11 +894,9 @@ function loadProfil(){
   const pa=document.getElementById("profil-avatar");
   if(savedPhoto) pa.innerHTML=`<img src="${savedPhoto}" alt="foto"/>`;
   else{ pa.innerHTML=""; document.getElementById("profil-initial").textContent=state.user.nama.charAt(0); }
-
   document.getElementById("profil-name").textContent=state.user.nama;
-  document.getElementById("profil-id-display").textContent="ID: "+id;
+  document.getElementById("profil-id-display").textContent="ID "+id;
   document.getElementById("pi-id").textContent=id;
-
   const hist=JSON.parse(localStorage.getItem(`history_${id}`)||"[]");
   const total=hist.length;
   const rata=total?Math.round(hist.reduce((s,h)=>s+h.pct,0)/total):0;
@@ -855,9 +908,7 @@ function loadProfil(){
 
 function doLogout(){
   state={ user:null, tanggal:"", soalData:[], bacaanData:[], jawaban:{}, submitted:false };
-  document.getElementById("screen-main").classList.remove("active");
-  document.getElementById("screen-stats").classList.remove("active");
-  document.getElementById("screen-profil").classList.remove("active");
+  ["screen-main","screen-stats","screen-profil"].forEach(id=>document.getElementById(id).classList.remove("active"));
   document.getElementById("screen-login").classList.add("active");
   document.getElementById("user-pill").style.display="none";
   document.getElementById("nav-tabs").style.display="none";
@@ -868,9 +919,8 @@ function doLogout(){
   if(chartBar){ chartBar.destroy(); chartBar=null; }
 }
 
-// ── HELPERS ───────────────────────────────────────────────────
-function getHL(p){ if(p===100) return"Sempurna! 🏆"; if(p>=80) return"Luar Biasa! 🌟"; if(p>=60) return"Bagus! 💪"; if(p>=40) return"Semangat Terus! 📚"; return"Ayo Belajar Lagi! 🔁"; }
-function getDS(p){ if(p===100) return"Semua soal benar! Performa sempurna."; if(p>=80) return"Hampir sempurna! Terus pertahankan."; if(p>=60) return"Di atas rata-rata. Sedikit lagi!"; if(p>=40) return"Masih banyak ruang untuk berkembang."; return"Jangan menyerah — review materi!"; }
+function getHL(p){ if(p===100) return"Sempurna"; if(p>=80) return"Luar Biasa"; if(p>=60) return"Bagus"; if(p>=40) return"Semangat Terus"; return"Ayo Belajar Lagi"; }
+function getDS(p){ if(p===100) return"Semua soal benar. Performa sempurna hari ini."; if(p>=80) return"Hampir sempurna. Terus pertahankan."; if(p>=60) return"Di atas rata-rata. Sedikit lagi."; if(p>=40) return"Masih banyak ruang untuk berkembang."; return"Jangan menyerah — review materi dan coba lagi."; }
 function showToast(msg){ const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show"); setTimeout(()=>t.classList.remove("show"),3000); }
 </script>
 </body>
