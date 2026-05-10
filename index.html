@@ -589,12 +589,17 @@ function restoreSession(){
   document.getElementById("uname-display").textContent = user.nama.split(" ")[0];
   document.getElementById("header-initial").textContent = user.nama.charAt(0);
   document.getElementById("user-pill").style.display = "flex";
-  document.getElementById("nav-tabs").style.display = "flex";
-  document.getElementById("bottom-nav").style.display = "flex";
+  // Use classList (same as doLogin) so desktop CSS .visible controls display correctly
+  document.getElementById("nav-tabs").classList.add("visible");
+  // Remove inline style so CSS media query controls bottom-nav display on mobile
+  document.getElementById("bottom-nav").removeAttribute("style");
   document.getElementById("display-date").textContent =
     today.toLocaleDateString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
   const savedPhoto = localStorage.getItem(`photo_${id}`);
   if(savedPhoto) setAvatarPhoto(savedPhoto);
+  // Pre-populate profil & statistik data so tabs aren't empty on restore
+  loadProfil();
+  loadStats();
   loadSoal();
 }
 
