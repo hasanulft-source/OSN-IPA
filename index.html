@@ -54,9 +54,15 @@ header{position:sticky;top:0;z-index:200;
 /* DESKTOP NAV */
 .nav-tabs{display:none;align-items:center;gap:2px;
   background:rgba(255,255,255,0.1);border-radius:20px;padding:3px;}
+.nav-tabs.visible{display:flex;}
 .nav-tab{padding:5px 14px;border-radius:16px;font-size:12px;font-weight:700;
   color:rgba(255,255,255,0.65);cursor:pointer;transition:all 0.18s;
-  border:none;background:none;font-family:var(--font);letter-spacing:0.2px;}
+  border:none;background:none;font-family:var(--font);letter-spacing:0.2px;
+  -webkit-user-select:none;user-select:none;}
+.nav-tabs *{pointer-events:auto;}
+/* Prevent browser tooltip */
+header *{ -webkit-touch-callout:none; }
+.nav-tab::before,.nav-tab::after{ display:none!important; }
 .nav-tab.active{background:rgba(255,255,255,0.18);color:#fff;}
 .nav-tab:hover:not(.active){color:#fff;}
 
@@ -337,7 +343,7 @@ footer{position:fixed;bottom:0;left:0;right:0;
 @media(max-width:600px){
   header{padding:0 16px;height:54px;}
   .logo-sub,.hdr-copy{display:none;}
-  #nav-tabs{display:none!important;}
+  #nav-tabs,#nav-tabs.visible{display:none!important;}
   #uname-display{display:none;}
   #user-pill{padding:2px;border:none;background:none;}
 
@@ -380,7 +386,7 @@ footer{position:fixed;bottom:0;left:0;right:0;
     <span class="logo-text">OSN IPA<span class="logo-sub"> &nbsp;Latihan Harian</span></span>
   </div>
   <div class="header-right">
-    <nav class="nav-tabs" id="nav-tabs">
+    <nav class="nav-tabs" id="nav-tabs" aria-label="navigasi">
       <button class="nav-tab active" onclick="goTab('soal')" title="">Latihan</button>
       <button class="nav-tab" onclick="goTab('stats')" title="">Statistik</button>
       <button class="nav-tab" onclick="goTab('profil')" title="">Profil</button>
@@ -403,7 +409,7 @@ footer{position:fixed;bottom:0;left:0;right:0;
     <div class="bni-dot"></div>
     <span class="bni-label">Statistik</span>
   </button>
-  <button class="bottom-nav-item" id="bn-profil" onclick="goTab('profil')">
+  <button class="bottom-nav-item" id="bn-profil" onclick="goTab('profil')" title="">
     <div class="bni-dot"></div>
     <span class="bni-label">Profil</span>
   </button>
@@ -563,7 +569,34 @@ let chartLine=null, chartBar=null;
 document.addEventListener("DOMContentLoaded",()=>{
   document.getElementById("inp-pw").addEventListener("keydown",e=>{ if(e.key==="Enter") doLogin(); });
   document.getElementById("inp-id").addEventListener("keydown",e=>{ if(e.key==="Enter") document.getElementById("inp-pw").focus(); });
+  // Restore session if user was logged in
+  restoreSession();
 });
+
+function restoreSession(){
+  const saved = sessionStorage.getItem("osn_session");
+  if(!saved) return;
+  const { id } = JSON.parse(saved);
+  const user = USERS[id];
+  if(!user) return;
+  // Re-login silently
+  state.user = { id, ...user };
+  const today = new Date();
+  state.tanggal = today.toLocaleDateString("sv-SE",{timeZone:"Asia/Jakarta"});
+  document.getElementById("screen-login").classList.remove("active");
+  document.getElementById("screen-main").classList.add("active");
+  document.getElementById("display-name").textContent = user.nama.split(" ")[0];
+  document.getElementById("uname-display").textContent = user.nama.split(" ")[0];
+  document.getElementById("header-initial").textContent = user.nama.charAt(0);
+  document.getElementById("user-pill").style.display = "flex";
+  document.getElementById("nav-tabs").style.display = "flex";
+  document.getElementById("bottom-nav").style.display = "flex";
+  document.getElementById("display-date").textContent =
+    today.toLocaleDateString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+  const savedPhoto = localStorage.getItem(`photo_${id}`);
+  if(savedPhoto) setAvatarPhoto(savedPhoto);
+  loadSoal();
+}
 
 function togglePw(){ const i=document.getElementById("inp-pw"); i.type=i.type==="password"?"text":"password"; }
 
@@ -604,7 +637,7 @@ function doLogin(){
   document.getElementById("uname-display").textContent=user.nama.split(" ")[0];
   document.getElementById("header-initial").textContent=user.nama.charAt(0);
   document.getElementById("user-pill").style.display="flex";
-  document.getElementById("nav-tabs").style.display="flex";
+  document.getElementById("nav-tabs").classList.add("visible");
   document.getElementById("bottom-nav").style.display="flex";
 
   const savedPhoto=localStorage.getItem(`photo_${id}`);
@@ -612,6 +645,9 @@ function doLogin(){
 
   document.getElementById("display-date").textContent=
     today.toLocaleDateString("id-ID",{weekday:"long",year:"numeric",month:"long",day:"numeric"});
+
+  // Save session
+  sessionStorage.setItem("osn_session", JSON.stringify({ id }));
 
   loadSoal();
 }
@@ -837,7 +873,32 @@ function loadStats(){
   else{ sa.innerHTML=""; document.getElementById("stats-initial").textContent=state.user.nama.charAt(0); }
   document.getElementById("stats-name").textContent=state.user.nama;
 
-  const hist=JSON.parse(localStorage.getItem(`history_${id}`)||"[]");
+  // Also check submitted records and rebuild history if empty
+  let hist=JSON.parse(localStorage.getItem(`history_${id}`)||"[]");
+  if(!hist.length){
+    // Try to rebuild from submitted records
+    const rebuilt=[];
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);
+      if(key && key.startsWith(`submitted_${id}_`)){
+        try{
+          const d=JSON.parse(localStorage.getItem(key));
+          const tgl=key.replace(`submitted_${id}_`,"");
+          if(!rebuilt.find(h=>h.tanggal===tgl)){
+            const parts=(d.skor||"0/0").split("/");
+            const skorNum=parseInt(parts[0])||0;
+            const totalNum=parseInt(parts[1])||0;
+            rebuilt.push({ tanggal:tgl, skor:skorNum, total:totalNum, pct:d.pct||0 });
+          }
+        }catch(e){}
+      }
+    }
+    if(rebuilt.length){
+      rebuilt.sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
+      localStorage.setItem(`history_${id}`,JSON.stringify(rebuilt));
+      hist=rebuilt;
+    }
+  }
 
   if(!hist.length){
     document.getElementById("stat-total-latihan").textContent="0";
@@ -901,7 +962,29 @@ function loadProfil(){
   document.getElementById("profil-name").textContent=state.user.nama;
   document.getElementById("profil-id-display").textContent="ID "+id;
   document.getElementById("pi-id").textContent=id;
-  const hist=JSON.parse(localStorage.getItem(`history_${id}`)||"[]");
+  let hist=JSON.parse(localStorage.getItem(`history_${id}`)||"[]");
+  // Rebuild from submitted if empty
+  if(!hist.length){
+    const rebuilt=[];
+    for(let i=0;i<localStorage.length;i++){
+      const key=localStorage.key(i);
+      if(key&&key.startsWith(`submitted_${id}_`)){
+        try{
+          const d=JSON.parse(localStorage.getItem(key));
+          const tgl=key.replace(`submitted_${id}_`,"");
+          if(!rebuilt.find(h=>h.tanggal===tgl)){
+            const parts=(d.skor||"0/0").split("/");
+            rebuilt.push({ tanggal:tgl, skor:parseInt(parts[0])||0, total:parseInt(parts[1])||0, pct:d.pct||0 });
+          }
+        }catch(e){}
+      }
+    }
+    if(rebuilt.length){
+      rebuilt.sort((a,b)=>a.tanggal.localeCompare(b.tanggal));
+      localStorage.setItem(`history_${id}`,JSON.stringify(rebuilt));
+      hist=rebuilt;
+    }
+  }
   const total=hist.length;
   const rata=total?Math.round(hist.reduce((s,h)=>s+h.pct,0)/total):0;
   const terbaik=total?Math.max(...hist.map(h=>h.pct)):0;
@@ -915,10 +998,11 @@ function doLogout(){
   ["screen-main","screen-stats","screen-profil"].forEach(id=>document.getElementById(id).classList.remove("active"));
   document.getElementById("screen-login").classList.add("active");
   document.getElementById("user-pill").style.display="none";
-  document.getElementById("nav-tabs").style.display="none";
+  document.getElementById("nav-tabs").classList.remove("visible");
   document.getElementById("bottom-nav").style.display="none";
   document.getElementById("inp-id").value="";
   document.getElementById("inp-pw").value="";
+  sessionStorage.removeItem("osn_session");
   if(chartLine){ chartLine.destroy(); chartLine=null; }
   if(chartBar){ chartBar.destroy(); chartBar=null; }
 }
